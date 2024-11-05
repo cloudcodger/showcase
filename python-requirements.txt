@@ -1,0 +1,5 @@
+ansible
+netaddr
+openssh-wrapper
+proxmoxer==2.0.1
+requests

@@ -1,0 +1,17 @@
+---
+- name: Configure Proxmox on the three host systems in the Lab network.
+  hosts: proxmox_hosts
+  roles:
+    - role: cloudcodger.proxmox_openssh.proxmox_ve
+
+# The following role is now getting an error and does not complete.
+# Something in the setup has changed since this was first written and is no longer working.
+- name: Configure the Proxmox Datacenter.
+  gather_facts: false
+  hosts: localhost
+  roles:
+    - role: cloudcodger.proxmox_openssh.proxmox_datacenter
+      datacenter_users: ['s1m0ne@pve']
+      proxmox_api_host: "{{ groups['proxmox_hosts'] | first }}"
+      datacenter_tokens: ['s1m0ne@pve!ansible']
+      local_token_secret_name_prefix: "lab-"

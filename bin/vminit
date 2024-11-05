@@ -1,0 +1,35 @@
+#! /bin/env bash
+
+BIN_PATH=$(dirname $0)
+REPO_PATH=$(dirname $BIN_PATH)
+
+PROFILE_ADDITION='
+if [ -e "$HOME/.venv/bin/activate" ] ; then
+    source $HOME/.venv/bin/activate
+fi
+'
+
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install python3 python3-pip python3-venv
+
+if [ ! -d ${HOME}/.venv ] ; then
+  python3 -m venv ${HOME}/.venv
+  pip3 install -r ${REPO_PATH}/python-requirements.txt
+fi
+
+[ -f ${HOME}/.ssh/config ] || cp ${REPO_PATH}/files/ssh_config ${HOME}/.ssh/config
+
+[ -f ${HOME}/.ssh/showcase ] || ssh-keygen -f ${HOME}/.ssh/showcase -N ''
+# if [ ! -f ${HOME}/.ssh/showcase ] ; then
+#   ssh-keygen -f ${HOME}/.ssh/showcase -N ''
+# fi
+
+if ! grep -q bin/activate ${HOME}/.profile ; then
+  echo "${PROFILE_ADDITION}" >> ${HOME}/.profile
+fi
+
+cd ${REPO_PATH}
+source ${HOME}/.venv/bin/activate
+pip3 install -r python-requirements.txt
+ansible-galaxy install -r requirements.yml
