@@ -1,0 +1,11 @@
+---
+ansible_user: root
+
+bind9_servers_zones:
+  - name: "lab.{{ showcase_base_domain }}"
+    primaries:
+      - "192.168.6.11"
+
+  - name: '6.168.192.in-addr.arpa'
+    primaries:
+      - "192.168.6.11"

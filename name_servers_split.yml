@@ -1,0 +1,16 @@
+---
+- name: >
+    Showcase configuring split Bind9 Name Server containers.
+    Where two primary/secondary name server are configured using
+    'host_vars/ns4.yml' and 'host_vars/ns5.yml'.
+    And a secondary name server with a forwarders only zone is
+    configured using 'host_vars/ns6.yml'.
+  hosts: ns_split
+
+  vars_files:
+    - 'zone_vars/192.168.6.yml'
+    - 'zone_vars/lab.yml'
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.dns.bind9_servers

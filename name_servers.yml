@@ -1,0 +1,18 @@
+---
+- name: >
+    Showcase configuring standard Bind9 Name Server containers.
+    Considered to be the most beneficial example having all zones use the same host as the primary
+    name server and the rest of the hosts as secondaries.
+    Where the primary name server is configured using 'host_vars/ns1.yml' and
+    all secondary name servers are configured using 'group_vars/name_server.yml'.
+  hosts: name_server
+
+  # It may be of special interest to note that the variables that get set in these files
+  # are only being used by `ns1` and are just ignored by the other hosts in the group.
+  vars_files:
+    - zone_vars/192.168.6.yml
+    - zone_vars/lab.yml
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.dns.bind9_servers

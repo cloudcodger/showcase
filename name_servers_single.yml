@@ -1,0 +1,10 @@
+---
+- name: >
+    Showcase configuring a single standalone Bind9 Name Server container.
+    Where the name server is configured using 'group_vars/ns_split.yml'.
+  become: true
+  hosts: ns_single
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.dns.bind9_servers

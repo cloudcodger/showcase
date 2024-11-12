@@ -1,0 +1,68 @@
+---
+# Custom vars file for name server LXC containers and VMs.
+
+cloud_init_ctrl_cores: 2
+cloud_init_ctrl_tags: ["ns_vm"]
+cloud_init_disk_storage: local-lvm
+cloud_init_image: ubuntu-22.04-qemu-guest.qcow2
+cloud_init_startup_pause: 20
+cloud_init_storage: local-lvm
+cloud_init_work_cores: 1
+cloud_init_work_tags: ["ns_vm"]
+
+cloud_init_vms:
+  - name: "ns7"
+    control: true
+    ip: "192.168.6.17/24"
+    pm_host: gadget1
+    vmid: "617"
+  - name: "ns8"
+    control: false
+    ip: "192.168.6.18/24"
+    pm_host: gadget2
+    vmid: "618"
+  - name: "ns9"
+    control: false
+    ip: "192.168.6.19/24"
+    pm_host: gadget3
+    vmid: "619"
+
+lxc_cores: 1
+lxc_disk_size: "12"
+lxc_features: ["nesting=1"]
+lxc_storage: local-lvm
+lxc_template: ubuntu-24.04-standard_24.04-2_amd64.tar.zst
+
+lxc_cts:
+  - name: "ns0"
+    ip: "192.168.6.10/24"
+    tags: ["ns_single"]
+    vmid: "610"
+  - name: "ns1"
+    ip: "192.168.6.11/24"
+    tags: ["name_server"]
+    vmid: "611"
+  - name: "ns2"
+    ip: "192.168.6.12/24"
+    pm_host: gadget2
+    tags: ["name_server"]
+    vmid: "612"
+  - name: "ns3"
+    ip: "192.168.6.13/24"
+    pm_host: gadget3
+    tags: ["name_server"]
+    vmid: "613"
+  - name: "ns4"
+    ip: "192.168.6.14/24"
+    tags: ["ns_split"]
+    vmid: "614"
+  - name: "ns5"
+    ip: "192.168.6.15/24"
+    pm_host: gadget2
+    tags: ["ns_split"]
+    vmid: "615"
+  - name: "ns6"
+    ip: "192.168.6.16/24"
+    pm_host: gadget3
+    tags: ["ns_split"]
+    vmid: "616"

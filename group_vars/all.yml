@@ -1,0 +1,9 @@
+---
+k0s_worker_profiles:
+  - name: default
+    values:
+      maxPods: 220
+
+# Used by the '*_destroy.yml' playbooks.
+secrets_dir: "{{ lookup('env', 'HOME') }}/.pve_tokens"
+showcase_base_domain: "{{ lookup('ansible.builtin.env', 'SHOWCASE_BASE_DOMAIN', default='example.com') }}"

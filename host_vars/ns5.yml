@@ -1,0 +1,13 @@
+---
+# Showcases how a name server can be configured as a
+# Primary for one zone (for example: 6.168.192.in-addr.arpa) and
+# a Secondary for another zone (for example: lab.example.com).
+# The reverse of how ns4 is configured.
+
+bind9_servers_zones:
+  - name: "lab.{{ showcase_base_domain }}"
+    primaries:
+      - "192.168.6.14" # the IP for ns4
+
+  - name: '6.168.192.in-addr.arpa'
+    records_var: zone_192_168_6

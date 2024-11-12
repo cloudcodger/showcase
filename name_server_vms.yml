@@ -1,0 +1,10 @@
+---
+- name: Create VMs for Bind9 Name Servers.
+  gather_facts: false
+  hosts: localhost
+
+  vars_files:
+    - custom_vars/name_server.yml
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
