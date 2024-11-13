@@ -1,0 +1,10 @@
+---
+- name: Create container for 'garage' services.
+  gather_facts: false
+  hosts: localhost
+
+  vars_files:
+    - custom_vars/garage.yml
+
+  roles:
+    - role: cloudcodger.proxmox_client.lxc

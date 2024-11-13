@@ -1,0 +1,11 @@
+---
+- name: Stop and Remove 'garage' Container to clean up after testing.
+  gather_facts: false
+  hosts: localhost
+
+  vars_files:
+    - custom_vars/garage.yml
+
+  roles:
+    - role: destroyer
+      destroyer_group: garage_ct

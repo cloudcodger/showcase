@@ -1,0 +1,24 @@
+---
+ansible_user: root
+
+apt_mirror_install_patched_executable: true
+apt_mirror_nginx_disable_defaults: true
+apt_mirror_nginx_add_site: true
+apt_mirror_nthreads: 10
+apt_mirror_list:
+  - "# Debian bookworm"
+  - "deb-amd64 http://deb.debian.org/debian bookworm main contrib"
+  - "deb-amd64 http://deb.debian.org/debian bookworm-updates main contrib"
+  - "deb-amd64 http://security.debian.org bookworm-security main contrib"
+  - "clean http://deb.debian.org/debian"
+  - "clean http://security.debian.org"
+  # - ""
+  # - "# Ubuntu 22.04"
+  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy main/debian-installer main restricted universe multiverse"
+  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy-backports main/debian-installer main restricted universe multiverse"
+  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy-security main/debian-installer main restricted universe multiverse"
+  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy-updates main/debian-installer main restricted universe multiverse"
+  # - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports jammy main/debian-installer main restricted universe multiverse"
+  # - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports jammy-security main/debian-installer main restricted universe multiverse"
+  # - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports jammy-updates main/debian-installer main restricted universe multiverse"
+  # - "clean http://us.archive.ubuntu.com/ubuntu"

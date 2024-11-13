@@ -1,0 +1,10 @@
+---
+- name: >
+    Configure 'garage_ct' Hosts.
+    Testing Ubuntu roles 'initial_apt_update', 'netboot_xyz', and 'apt_mirror'.
+  hosts: garage_ct
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.ubuntu.netboot_xyz
+    - role: cloudcodger.ubuntu.apt_mirror
