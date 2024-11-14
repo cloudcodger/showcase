@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+SYNOPSIS="\
+This script performs an 'ssh-keygen -R' to remove entries from '~/.ssh/known_hosts'.
+
+Used to quickly clean up old host keys when lab systems have been rebuilt and
+the keys remained behind for some reason.
+
+By default, it will remove all names and IP addresses that have an A record in
+the zone_vars/lab.yml file. Except for gadget[123] and hatch entries.
+"
+
+ALL_NON_GADGET="192.168.6.{2..250}"
+BASE_DOMAIN="${SHOWCASE_BASE_DOMAIN:-example.com}"
+DT_STAMP=$(date "+%Y-%m-%d-%H%M")
+
+USAGE="\
+Usage: $0 (options)
+  -g : Remove 'gadget' entries.
+  -h : Print Help output (this message).
+  -i : Remove IPs from 192.168.6.2 to 192.168.6.250
+"
+
+while getopts "ghi" option
+do
+  case ${option} in
+  g)
+    GADGETS="yes"
+    for host in 192.168.6.{251..253} gadget{1..3} gadget{1..3}.lab gadget{1..3}.lab.${BASE_DOMAIN}
+    do
+      ssh-keygen -R ${host}
+    done
+    ;;
+  h)
+    echo -e "${SYNOPSIS}\n${USAGE}"
+    exit 41
+    ;;
+  i)
+    IPS="yes"
+    for host in 192.168.6.{2..250}
+    do
+      ssh-keygen -R ${host}
+    done
+    ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+if [ -z "${GADGETS}" ] && [ -z "${IPS}" ]
+then
+  sed -n "/\;\;A\;/ s#[ '-]##gp" zone_vars/lab.yml | while read line
+  do
+    case ${line%%;*} in
+    gadget*)
+      # echo skipping ${line%%;*}
+      continue
+      ;;
+    hatch*)
+      # echo skipping ${line%%;*}
+      continue
+      ;;
+    esac
+    ssh-keygen -R ${line%%;*}
+    ssh-keygen -R ${line##*;}
+  done
+fi

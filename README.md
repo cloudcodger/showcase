@@ -1,6 +1,6 @@
 # Showcase of various DevOps related tools
 
-This repository is designed to be a showcase for sharing different methods of performing some useful DevOps tools and scripts.
+This repository is designed to be a showcase for sharing different methods of implementing some useful DevOps tools and scripts.
 
 For reproducability by others, these instructions are written for Ubuntu. This could be a computer with Ubuntu Desktop, or a VM running under one of:
 
@@ -51,4 +51,6 @@ cd git-repos/cloudcodger/showcase
 
 # Showcased Items
 
-- [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items
+- [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.
+- [Garage](docs/Garage.md), the `apt-mirror` and `netboot_xyz` services.
+- [Name Server](docs/NameServer.md), multiple playbooks demonstrating different DNS Name Server deployments.
