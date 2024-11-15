@@ -3,9 +3,6 @@
   gather_facts: false
   hosts: localhost
 
-  vars_files:
-    - custom_vars/garage.yml
-
   roles:
     - role: destroyer
       destroyer_group: garage_ct
