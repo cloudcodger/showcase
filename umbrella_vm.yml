@@ -1,0 +1,19 @@
+---
+- name: Create an Umbrella VM for testing generic Ubuntu services.
+  gather_facts: false
+  hosts: localhost
+
+  vars:
+    cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+    cloud_init_startup_pause: 1
+    # cloud_init_storage: local-zfs
+    cloud_init_work_tags: [umbrella_vm]
+
+    cloud_init_vms:
+      - name: umbrella
+        control: false
+        ip: "192.168.6.6/24"
+        vmid: "606"
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init

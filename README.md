@@ -55,3 +55,4 @@ cd git-repos/cloudcodger/showcase
 - [Garage](docs/Garage.md), the `apt-mirror` and `netboot_xyz` services.
 - [Name Server](docs/NameServer.md), multiple playbooks demonstrating different DNS Name Server deployments.
 - [Study](docs/Study.md), VM for study of new concepts and applications.
+- [Umbrella](docs/Umbrella.md), another VM for study of new concepts and applications.
