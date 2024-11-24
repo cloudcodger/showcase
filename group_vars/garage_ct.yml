@@ -1,24 +1,39 @@
 ---
 ansible_user: root
 
-apt_mirror_install_patched_executable: true
-apt_mirror_nginx_disable_defaults: true
-apt_mirror_nginx_add_site: true
-apt_mirror_nthreads: 10
-apt_mirror_list:
-  - "# Debian bookworm"
-  - "deb-amd64 http://deb.debian.org/debian bookworm main contrib"
-  - "deb-amd64 http://deb.debian.org/debian bookworm-updates main contrib"
-  - "deb-amd64 http://security.debian.org bookworm-security main contrib"
-  - "clean http://deb.debian.org/debian"
-  - "clean http://security.debian.org"
-  # - ""
-  # - "# Ubuntu 22.04"
-  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy main/debian-installer main restricted universe multiverse"
-  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy-backports main/debian-installer main restricted universe multiverse"
-  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy-security main/debian-installer main restricted universe multiverse"
-  # - "deb-amd64 http://us.archive.ubuntu.com/ubuntu jammy-updates main/debian-installer main restricted universe multiverse"
-  # - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports jammy main/debian-installer main restricted universe multiverse"
-  # - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports jammy-security main/debian-installer main restricted universe multiverse"
-  # - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports jammy-updates main/debian-installer main restricted universe multiverse"
-  # - "clean http://us.archive.ubuntu.com/ubuntu"
+# The apt_mirror settings were left in here for reference,
+# in case anyone wanted to play with it.
+
+# apt_mirror_install_patched_executable: true
+# apt_mirror_nginx_disable_defaults: true
+# apt_mirror_nginx_add_site: true
+# apt_mirror_nginx_default_server: true
+# apt_mirror_nginx_site_name: garage
+# apt_mirror_nthreads: 10
+
+# apt_mirror_list:
+#   - "# Debian bookworm"
+#   - deb http://ftp.us.debian.org/debian bookworm main contrib non-free-firmware
+#   - deb-src http://ftp.us.debian.org/debian bookworm main
+#   - deb http://ftp.us.debian.org/debian bookworm-backports main contrib non-free-firmware
+#   - deb http://ftp.us.debian.org/debian bookworm-updates main contrib
+#   - deb http://security.debian.org/debian-security bookworm-security main contrib non-free-firmware
+#   - deb-src http://security.debian.org/debian-security bookworm-security main contrib non-free-firmware
+#   - clean http://security.debian.org
+#   - ""
+#   - "# Ubuntu 24.04"
+#   - "deb-amd64 http://us.archive.ubuntu.com/ubuntu noble main/debian-installer main restricted universe multiverse"
+#   - "deb-amd64 http://us.archive.ubuntu.com/ubuntu noble-backports main/debian-installer main restricted universe multiverse"
+#   - "deb-amd64 http://us.archive.ubuntu.com/ubuntu noble-security main/debian-installer main restricted universe multiverse"
+#   - "deb-amd64 http://us.archive.ubuntu.com/ubuntu noble-updates main/debian-installer main restricted universe multiverse"
+#   - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports noble main/debian-installer main restricted universe multiverse"
+#   - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports noble-security main/debian-installer main restricted universe multiverse"
+#   - "deb-arm64 http://ports.ubuntu.com/ubuntu-ports noble-updates main/debian-installer main restricted universe multiverse"
+#   - "clean http://us.archive.ubuntu.com/ubuntu"
+#   - "clean http://ports.ubuntu.com/ubuntu-ports"
+
+# apt_mirror_nginx_locations:
+#   - name: /debian
+#     alias: "{{ apt_mirror_base_path }}/mirror/ftp.us.debian.org/debian"
+#   - name: /debian-security
+#     alias: "{{ apt_mirror_base_path }}/mirror/security.debian.org/debian-security"

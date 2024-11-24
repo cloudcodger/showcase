@@ -1,5 +1,7 @@
 ---
 zone_lab:
+  - 'build;;A;192.168.6.55'
+  - 'build;;TXT;Cloud-Init cicustom config'
   - 'captain1;;A;192.168.6.41'
   - 'captain1;;TXT;Kubernetes control node'
   - 'captain1;;TXT;Third Kubernetes cluster'
@@ -9,8 +11,6 @@ zone_lab:
   - 'captain3;;A;192.168.6.43'
   - 'captain3;;TXT;Kubernetes control node'
   - 'captain3;;TXT;Third Kubernetes cluster'
-  - 'cic;;A;192.168.6.51'
-  - 'cic;;TXT;Cloud-Init custom config'
   - 'crew1;;A;192.168.6.44'
   - 'crew1;;TXT;Kubernetes worker node'
   - 'crew1;;TXT;Third Kubernetes cluster'
@@ -30,6 +30,8 @@ zone_lab:
   - 'ctrlplane;;TXT;LB address for Kubernetes control plane'
   - 'dockreg;;A;192.168.6.4'
   - 'dockreg;;TXT;Docker Registry Service'
+  - 'extra;;A;192.168.6.51'
+  - 'extra;;TXT;TBD'
   - 'gadget1;;A;192.168.6.251'
   - 'gadget1;;TXT;Proxmox Cluster Node'
   - 'gadget2;;A;192.168.6.252'

@@ -1,0 +1,11 @@
+---
+- name: Create a 'vendor-data.yml' snippet.
+  hosts: "{{ groups['proxmox_hosts'] | random }}"
+  roles:
+    - role: cloudcodger.proxmox_openssh.proxmox_snippet
+      proxmox_snippet_contents: |-
+        #cloud-config
+        apt:
+          primary:
+            - arches: [default]
+              uri: "http://garage.lab.{{ showcase_base_domain }}:3142/archive.ubuntu.com/ubuntu/"

@@ -1,0 +1,12 @@
+---
+cloud_init_image: ubuntu-24.04-server.qcow2
+cloud_init_startup_pause: 1
+cloud_init_work_tags: ["extra_vm"]
+
+cloud_init_vms:
+  - name: extra
+    custom: "vendor=configs:snippets/vendor-data.yml"
+    control: false
+    ip: "192.168.6.51/24"
+    pm_host: gadget2
+    vmid: "451"

@@ -52,7 +52,8 @@ cd git-repos/cloudcodger/showcase
 # Showcased Items
 
 - [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.
-- [Garage](docs/Garage.md), the `apt-mirror` and `netboot_xyz` services.
+- [Extra](docs/Extra.md), using `cicustom` for `vendor_data` (think Cloud Init `user_data`).
+- [Garage](docs/Garage.md), the `apt-cacher` and `netboot_xyz` services.
 - [Name Server](docs/NameServer.md), multiple playbooks demonstrating different DNS Name Server deployments.
 - [Study](docs/Study.md), VM for study of new concepts and applications.
 - [Umbrella](docs/Umbrella.md), another VM for study of new concepts and applications.

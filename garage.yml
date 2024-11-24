@@ -1,10 +1,43 @@
 ---
 - name: >
     Configure 'garage_ct' Hosts.
-    Testing Ubuntu roles 'initial_apt_update', 'netboot_xyz', and 'apt_mirror'.
+    Testing Ubuntu roles 'initial_apt_update' and 'netboot_xyz'.
+    Install and configure 'apt_cacher'.
   hosts: garage_ct
 
   roles:
     - role: cloudcodger.ubuntu.initial_apt_update
     - role: cloudcodger.ubuntu.netboot_xyz
-    - role: cloudcodger.ubuntu.apt_mirror
+    # - role: cloudcodger.ubuntu.apt_mirror
+
+  handlers:
+    - name: Reload apt-cacher
+      ansible.builtin.service:
+        name: apt-cacher
+        state: reloaded
+
+  tasks:
+    - name: Install 'apt-cacher'.
+      ansible.builtin.apt:
+        pkg: apt-cacher
+
+    - name: Create a apt-mirror root owned directories.
+      ansible.builtin.file:
+        path: "/apt-cacher"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: "0755"
+      notify: Reload apt-cacher
+
+    - name: Insert/Update apt-mirror configuration
+      ansible.builtin.blockinfile:
+        create: true
+        path: /etc/apt-cacher/conf.d/garage
+        block: |
+          allowed_hosts = *
+          cache_dir = /apt-cacher
+          distinct_namespaces = 1
+          group = www-data
+          user = www-data
+      notify: Reload apt-cacher
