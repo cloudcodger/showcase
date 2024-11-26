@@ -1,0 +1,10 @@
+---
+- name: Create container for 'build' machine.
+  gather_facts: false
+  hosts: localhost
+
+  vars_files:
+    - custom_vars/build.yml
+
+  roles:
+    - role: cloudcodger.proxmox_client.lxc

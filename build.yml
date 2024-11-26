@@ -1,0 +1,51 @@
+---
+- name: Install 'libguestfs-tools' and update cloud init image files to contain the 'qemu-guest-agent'.
+  hosts: build_ct
+
+  vars:
+    images:
+      - src: files/debian-12-genericcloud-amd64.qcow2
+        dest: files/debian-12-qemu-guest.qcow2
+      - src: files/ubuntu-22.04-server.qcow2
+        dest: files/ubuntu-22.04-qemu-guest.qcow2
+      # - src: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+      #   dest: files/ubuntu-22.04-qemu-guest.qcow2
+      - src: files/ubuntu-24.04-server.qcow2
+        dest: files/ubuntu-24.04-qemu-guest.qcow2
+      # - src: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+      #   dest: files/ubuntu-24.04-qemu-guest.qcow2
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+
+  tasks:
+    - name: Install libguestfs-tools package.
+      ansible.builtin.apt:
+        name: libguestfs-tools
+        cache_valid_time: 3600
+        state: present
+
+    - name: Download cloud-init image file.
+      ansible.builtin.get_url:
+        url: "{{ item.src }}"
+        dest: "/root/{{ item.dest | basename }}"
+      loop: "{{ images }}"
+      when: item.src.startswith('http')
+
+    - name: Copy cloud-init image file.
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "/root/{{ item.dest | basename }}"
+      loop: "{{ images }}"
+      when: not item.src.startswith('http')
+
+    - name: Add 'qemu-guest-agent' to image file.
+      ansible.builtin.command: "virt-customize -a {{ item.dest | basename }} --install qemu-guest-agent"
+      loop: "{{ images }}"
+
+    - name: Download the new image file.
+      ansible.builtin.fetch:
+        src: "/root/{{ item.dest | basename }}"
+        dest: "{{ item.dest }}"
+        flat: true
+      loop: "{{ images }}"

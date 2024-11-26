@@ -4,7 +4,8 @@
   hosts: localhost
 
   vars:
-    cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+    cloud_init_image: ubuntu-24.04-server.qcow2
+    # cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
     cloud_init_startup_pause: 1
     # cloud_init_storage: local-zfs
     cloud_init_work_tags: [umbrella_vm]

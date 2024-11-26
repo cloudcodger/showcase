@@ -2,6 +2,24 @@
 
 This repository is designed to be a showcase for sharing different methods of implementing some useful DevOps tools and scripts.
 
+The first showcase, [Proxmox VE](docs/PVE.md), will upload image files to each of the PVE nodes `local` storagefrom the `files` directory. Because they can be large files, the `files` directory is in `.gitignore` and not saved in the repository. The `acquire.yml` playbook can be used to populate this directory after cloning this repository and before working on any of the showcase items. Uncomment or add any image files as desired.
+
+```bash
+ansible-playbook acquire.yml
+```
+
+## Showcased Items
+
+- [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.
+- [Build](docs/Build.md), install `qemu-guest-agent` inside cloud init image files.
+- [Extra](docs/Extra.md), using `cicustom` for `vendor_data` (think Cloud Init `user_data`).
+- [Garage](docs/Garage.md), the `apt-cacher` and `netboot_xyz` services.
+- [Name Server](docs/NameServer.md), multiple playbooks demonstrating different DNS Name Server deployments.
+- [Study](docs/Study.md), VM for study of new concepts and applications.
+- [Umbrella](docs/Umbrella.md), another VM for study of new concepts and applications.
+
+# Details
+
 For reproducability by others, these instructions are written for Ubuntu. This could be a computer with Ubuntu Desktop, or a VM running under one of:
 
 - [Canonical Multipass](https://multipass.run/), recommended because it supports Mac and Windows
@@ -11,7 +29,7 @@ For reproducability by others, these instructions are written for Ubuntu. This c
 
 This repository will be written and tested using Multipass on a Mac. Caution, MacOS Sequoia has a potential limitation due to a new "feature" that limits access to the Local Network (under Privacy & Security) to specific applications. Figuring out how to get around the issues created by this new feature is beyond the scope of this showcase.
 
-Commands to create an Ubuntu VM named `showcase`.
+Commands to create an Ubuntu VM named `showcase` on MacOS.
 
 ```bash
 brew install --cask vscodium
@@ -48,12 +66,3 @@ git-repos/cloudcodger/showcase/bin/vminit
 source ${HOME}/.venv/bin/activate
 cd git-repos/cloudcodger/showcase
 ```
-
-# Showcased Items
-
-- [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.
-- [Extra](docs/Extra.md), using `cicustom` for `vendor_data` (think Cloud Init `user_data`).
-- [Garage](docs/Garage.md), the `apt-cacher` and `netboot_xyz` services.
-- [Name Server](docs/NameServer.md), multiple playbooks demonstrating different DNS Name Server deployments.
-- [Study](docs/Study.md), VM for study of new concepts and applications.
-- [Umbrella](docs/Umbrella.md), another VM for study of new concepts and applications.

@@ -20,7 +20,7 @@ ansible-playbook -i lab.inventory.proxmox.yml garage_destroy.yml
 
 ## `garage_container.yml`
 
-Creates the QEMU VM `garage`, using `custom_vars/garage.yml` (See, [custom_vars](Custom_vars.md)).
+Creates the LXC container `garage`, using `custom_vars/garage.yml` (See, [custom_vars](Custom_vars.md)).
 
 ```bash
 ansible-playbook garage_container.yml

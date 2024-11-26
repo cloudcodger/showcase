@@ -1,0 +1,18 @@
+---
+lxc_cores: 2
+lxc_disk_size: "20"
+lxc_features:
+  - nesting=1
+lxc_memory: "4096"
+lxc_pm_host: gadget1
+
+# Notice that the tag is different from the container name
+# Ansible will give a warning if you have groups that are the same name as any hosts
+# and you may have unpredictable results when referencing them.
+lxc_tags: ["build_ct"]
+lxc_template: debian-12-standard_12.2-1_amd64.tar.zst
+
+lxc_cts:
+  - name: build
+    ip: "192.168.6.55/24"
+    vmid: "6055"

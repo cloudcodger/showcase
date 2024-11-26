@@ -1,0 +1,24 @@
+---
+- name: Acquire the Cloud Init images desired.
+  gather_facts: false
+  hosts: localhost
+
+  vars:
+    images:
+      # - src: https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-generic-amd64.qcow2
+      #   dest: files/debian-11-generic-amd64.qcow2
+      - src: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+        dest: files/debian-12-genericcloud-amd64.qcow2
+      # - src: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+      #   dest: files/ubuntu-20.04-server.qcow2
+      # - src: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+      #   dest: files/ubuntu-22.04-server.qcow2
+      - src: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+        dest: files/ubuntu-24.04-server.qcow2
+
+  tasks:
+    - name: Download cloud-init image file.
+      ansible.builtin.get_url:
+        url: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ images }}"
