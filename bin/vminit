@@ -9,6 +9,15 @@ if [ -e "$HOME/.venv/bin/activate" ] ; then
 fi
 '
 
+SSH_CONFIG='StrictHostKeyChecking accept-new
+
+Host 192.168.6.251 192.168.6.252 192.168.6.253 gadget*
+  user root
+
+Host *
+  IdentityFile ~/.ssh/showcase
+'
+
 sudo apt-get update
 sudo apt-get dist-upgrade
 sudo apt-get install python3 python3-pip python3-venv
@@ -18,7 +27,7 @@ if [ ! -d ${HOME}/.venv ] ; then
   pip3 install -r ${REPO_PATH}/python-requirements.txt
 fi
 
-[ -f ${HOME}/.ssh/config ] || cp ${REPO_PATH}/files/ssh_config ${HOME}/.ssh/config
+[ -f ${HOME}/.ssh/config ] || echo -n "${SSH_CONFIG}" > ${HOME}/.ssh/config
 
 [ -f ${HOME}/.ssh/showcase ] || ssh-keygen -f ${HOME}/.ssh/showcase -N ''
 # if [ ! -f ${HOME}/.ssh/showcase ] ; then
