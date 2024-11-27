@@ -1,0 +1,16 @@
+---
+cloud_init_construct_cidr_start: "192.168.6.21/24"
+# cloud_init_construct_cidr6_start: "2607:fa18:d7fe:ff00::15/64"
+cloud_init_construct_controllers: 3
+cloud_init_construct_workers: 3
+cloud_init_construct_vmid_start: 621
+cloud_init_ctrl_cores: 2
+cloud_init_ctrl_memory: '4096'
+cloud_init_disk_storage: local-lvm
+# If you change the image to Debian, you must also change `ansible_user` in `group_vars/k0s.yml`.
+# cloud_init_image: debian-12-genericcloud-amd64.qcow2
+cloud_init_image: ubuntu-24.04-server.qcow2
+cloud_init_k8s_tag: k0s
+cloud_init_startup_pause: 20
+cloud_init_work_cores: 2
+cloud_init_work_memory: '8192'

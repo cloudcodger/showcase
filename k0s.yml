@@ -1,0 +1,29 @@
+---
+- name: Installing 'k0s' using the Ansible Roles in 'k8s' collection.
+  become: true
+  hosts: k0s
+
+  roles:
+    - role: cloudcodger.k8s.cloud_init_reboot
+    - role: cloudcodger.k8s.k0s
+
+  # The following tasks are optional and only download the kube_config files
+  # to the control node. If that is a VM and not where you want to run your
+  # `kubectl` commands, then just copy the below files to your other system.
+  # tasks:
+  #   - name: Create the '~/.kube' directory.
+  #     ansible.builtin.file:
+  #       path: "{{ lookup('env', 'HOME') }}/.kube"
+  #       group: ubuntu
+  #       mode: "0755"
+  #       owner: ubuntu
+  #       state: directory
+  #     delegate_to: localhost
+  #     run_once: true
+
+  #   - name: Get the 'admin' configuration from the control nodes.
+  #     ansible.builtin.fetch:
+  #       src: /var/lib/k0s/pki/admin.conf
+  #       dest: "{{ lookup('env', 'HOME') }}/.kube/{{ inventory_hostname }}.conf"
+  #       flat: true
+  #     when: "'control' in group_names"
