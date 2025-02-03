@@ -2,8 +2,6 @@
 
 This showcase demonstrates how to create a Kubernetes cluster using the [k0s](https://k0sproject.io/). It uses the `cloudcodger.proxmox_client.cloud_init` role to create the VMs and `cloudcodger.k8s.k0s` role to configure the cluster.
 
-CAUTION! There is an unknown and unresolved issue with a bare bones `k0s` cluster using this playbook right now. After the cluster has been up and running for some time (usually less than 24 hours), one or two of the control nodes will lock up and not be accessible. On the locked up nodes, one of the CPU cores will be at 100% utilization. Usually indicating that a process has entered an infinate loop. This will require a "hard stop" of the VM and then start it again. It seems like there is a bug somewhere in `k0s` that has not been found or fixed.
-
 The `ssh` command below, assumes you have the `cloudcodger` public key in the `host_vars/localhost.yml` in `cloud_init_sshkeys:`, as can be seen on line 16. Because these are public keys, they are safe to place in this file as only the person with the matching private key would be able to login.
 
 Quick commands:
@@ -13,8 +11,10 @@ ansible-playbook k0s_vm.yml
 
 ansible-playbook -i lab.inventory.proxmox.yml k0s.yml
 
-ssh -i ~/.ssh/cloudcodger ubuntu@ctrl1 'sudo cat /var/lib/k0s/pki/admin.conf' > ~/work/tmp/ctrl1.conf
-
+ssh ubuntu@ctrl1 'sudo k0s kubeconfig admin' > ~/.kube/config
+# or
+ssh -i ~/.ssh/cloudcodger ubuntu@ctrl1 'sudo k0s kubeconfig admin' > ~/.kube/config
+# can be destroyed with
 ansible-playbook -i lab.inventory.proxmox.yml k0s_destroy.yml
 ```
 

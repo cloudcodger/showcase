@@ -12,7 +12,7 @@ Quick commands:
 ansible-playbook garage_container.yml
 
 ansible-playbook -i lab.inventory.proxmox.yml garage.yml
-
+# can be destroyed with
 ansible-playbook -i lab.inventory.proxmox.yml garage_destroy.yml
 ```
 

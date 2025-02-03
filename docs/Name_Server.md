@@ -18,7 +18,7 @@ ansible-playbook -i lab.inventory.proxmox.yml name_servers.yml
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_single.yml
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_split.yml
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_standard.yml
-
+# can be destroyed with
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_destroy.yml
 ```
 

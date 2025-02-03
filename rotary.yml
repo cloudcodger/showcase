@@ -1,0 +1,9 @@
+---
+- name: Install and configure NGINX and keepalived.
+  hosts: rotary
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.ubuntu.keepalived
+    - role: cloudcodger.ubuntu.nginx
+    # - role: grafana.grafana.alloy

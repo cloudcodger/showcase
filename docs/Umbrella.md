@@ -10,6 +10,24 @@ Quick commands:
 
 ```bash
 ansible-playbook umbrella_vm.yml
+# can be destroyed with
+ansible-playbook -i lab.inventory.proxmox.yml umbrella_destroy.yml
+```
 
+# Playbooks
+
+## `umbrella_vm.yml`
+
+Creates the QEMU VM `umbrella`.
+
+```bash
+ansible-playbook umbrella_vm.yml
+```
+
+## `umbrella_destroy.yml`
+
+Destroys the `umbrella` VM and cleans up SSH keys.
+
+```bash
 ansible-playbook -i lab.inventory.proxmox.yml umbrella_destroy.yml
 ```

@@ -14,7 +14,8 @@ ansible-playbook acquire.yml
 - [Build](docs/Build.md), install `qemu-guest-agent` inside cloud init image files.
 - [Extra](docs/Extra.md), using `cicustom` for `vendor_data` (think Cloud Init `user_data`).
 - [Garage](docs/Garage.md), the `apt-cacher` and `netboot_xyz` services.
-- [Name Server](docs/NameServer.md), multiple playbooks demonstrating different DNS Name Server deployments.
+- [Kubernetes_k0s](docs/Kubernetes_k0s.md), create a Kubernetes cluster using `k0s`.
+- [Name Server](docs/Name_Server.md), multiple playbooks demonstrating different DNS Name Server deployments.
 - [Study](docs/Study.md), VM for study of new concepts and applications.
 - [Umbrella](docs/Umbrella.md), another VM for study of new concepts and applications.
 
@@ -49,6 +50,10 @@ The various scripts have been created to work for a test lab located in a dedica
 - A computer or VM to be the Ansible control host (where you run Ansible).
 - This git repository has been cloned to `~/git-repos/cloudcodger/showcase` (when using Multipass).
 
+## VMID Numbering Convention
+
+For each LXC Container or QEMU VM, the convention is to use the IP address as the basis for it. This means that they all start with `6` (the third octet) followed by a three digit number (the forth octet). For example, the IP `192.168.6.8` would be configured to use the VMID of `6008`.
+
 ## Domain name
 
 The domain name for this network is set using the `showcase_base_domain` variable, with a default of `example.com`. This is prepended with `lab` (default `lab.example.com`). In order to use another base domain (maybe one you have registered), set the environment varialbe `SHOWCASE_BASE_DOMAIN` and export it. Putting it in `~/.bashrc` will make sure you don't forget to set it.
@@ -66,3 +71,17 @@ git-repos/cloudcodger/showcase/bin/vminit
 source ${HOME}/.venv/bin/activate
 cd git-repos/cloudcodger/showcase
 ```
+
+# Ansible Inventory from Proxmox VE
+
+The playbooks in this repository take advantage of a [Proxmox inventory source](https://docs.ansible.com/ansible/latest/collections/community/general/proxmox_inventory.html) to dynamically build the inventory from the PVE cluster.
+
+## Inventory Source Configuration File
+
+The `lab.inventory.proxmox.yml` file is the source configuration file used for this showcase. The file name ends with `.proxmox.yml` as required in the above link.
+
+When the cluster is first created, the `url: https://192.168.6.251:8006/` will use a self signed certificate and `validate_certs: false` must be set for it to work.
+
+The settings configured will create an Ansible group for each tag on the LXC containers and VMs. This allows a playbook to create a set of VM with a specific tag that a subsequent playbook can reference in the `hosts:` line, so it will only run on the desired set of hosts and not all the hosts in the PVE cluster.
+
+Also notice that the `token_secret` is read from the file `~/.pve_tokens/lab-s1m0ne-pve-ansible.token`. The correct token must be located in this file and is created the first time the `pve.yml` playbook is run. When using multiple Ansible control nodes with this repository, keeping a copy of this token updated across all the control nodes is outside the scope of this readme. If you loose the token, it can be recreated by using the PVE UI to delete the API token and running the `pve.yml` playbook again to create a new one.

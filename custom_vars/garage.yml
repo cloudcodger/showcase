@@ -17,4 +17,4 @@ lxc_cts:
     ip: "192.168.6.7/24"
     mounts:
       mp0: "local-lvm:100,mp=/apt-cacher/"
-    vmid: "607"
+    vmid: "6007"

@@ -9,4 +9,4 @@ cloud_init_vms:
     control: false
     ip: "192.168.6.51/24"
     pm_host: gadget2
-    vmid: "451"
+    vmid: "6051"

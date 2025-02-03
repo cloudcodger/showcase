@@ -12,7 +12,7 @@ Quick commands:
 ansible-playbook build_container.yml
 
 ansible-playbook -i lab.inventory.proxmox.yml build.yml
-
+# can be destroyed with
 ansible-playbook -i lab.inventory.proxmox.yml build_destroy.yml
 ```
 

@@ -1,0 +1,86 @@
+---
+ansible_user: root
+
+alloy_config: "{{ lookup('file', 'grafana/rotary.alloy') }}"
+
+alloy_env_file_vars:
+  CUSTOM_ARGS: "--server.http.listen-addr=0.0.0.0:12345"
+
+keepalived_vip: 192.168.6.60
+
+nginx_cloud_config_sites:
+  - name: focal
+    server_name: prime20 prime20.lab.{{ showcase_base_domain }}
+  - name: jammy
+    server_name: prime22 prime22.lab.{{ showcase_base_domain }}
+    uri: http://prime7/ubuntu
+  - name: nobel
+    server_name: prime24 prime24.lab.{{ showcase_base_domain }}
+
+nginx_user_data_ssh_authorized_keys: |-
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwg1ybdTSPF2xFm+TS3bjelKO7VQgGpbyvr+b9qJBzr cloudcodger@showcase
+  - {{ lookup('file', lookup('env', 'HOME') + '/.ssh/showcase.pub') }}
+
+nginx_user_data_packages: |-
+  - htop
+  - top
+
+nginx_balancer_sites:
+  - name: loki
+    backends:
+      - "dogchow1.lab.{{ showcase_base_domain }}:3100"
+      - "dogchow2.lab.{{ showcase_base_domain }}:3100"
+      - "dogchow3.lab.{{ showcase_base_domain }}:3100"
+    headers:
+      - 'Connection ""'
+      - Host $http_host
+      - X-Scope-OrgID default
+      - X-Forwarded-For $proxy_add_x_forwarded_for
+      - X-Forwarded-Proto $scheme
+      - X-Real-IP $remote_addr
+    listen_port: "3100"
+    server_name: "_"
+  - name: mimir
+    backends:
+      - "dogchow1.lab.{{ showcase_base_domain }}:8080"
+      - "dogchow2.lab.{{ showcase_base_domain }}:8080"
+      - "dogchow3.lab.{{ showcase_base_domain }}:8080"
+    headers:
+      - 'Connection ""'
+      - Host $http_host
+      - X-Scope-OrgID default
+      - X-Forwarded-For $proxy_add_x_forwarded_for
+      - X-Forwarded-Proto $scheme
+      - X-Real-IP $remote_addr
+    listen_port: "9009"
+    server_name: "_"
+  - name: minio
+    backends:
+      - "minio1.lab.{{ showcase_base_domain }}:9000"
+      - "minio2.lab.{{ showcase_base_domain }}:9000"
+      - "minio3.lab.{{ showcase_base_domain }}:9000"
+    disable_chunked_encoding: true
+    headers:
+      - 'Connection ""'
+      - Host $http_host
+      - X-Forwarded-For $proxy_add_x_forwarded_for
+      - X-Forwarded-Proto $scheme
+      - X-Real-IP $remote_addr
+    http_version: "1.1"
+    listen_port: "9000"
+    server_name: "_"
+  - name: minio-ui
+    backends:
+      - "minio1.lab.{{ showcase_base_domain }}:9001"
+      - "minio2.lab.{{ showcase_base_domain }}:9001"
+      - "minio3.lab.{{ showcase_base_domain }}:9001"
+    disable_chunked_encoding: true
+    headers:
+      - 'Connection ""'
+      - Host $http_host
+      - X-Forwarded-For $proxy_add_x_forwarded_for
+      - X-Forwarded-Proto $scheme
+      - X-Real-IP $remote_addr
+    http_version: "1.1"
+    listen_port: "80"
+    server_name: "_"

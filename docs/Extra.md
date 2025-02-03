@@ -10,7 +10,7 @@ Quick commands:
 ansible-playbook -i pve_hosts.ini extra_snippet.yml
 
 ansible-playbook extra_vm.yml
-
+# can be destroyed with
 ansible-playbook -i lab.inventory.proxmox.yml extra_destroy.yml
 ```
 
