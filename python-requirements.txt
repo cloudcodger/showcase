@@ -1,5 +1,7 @@
 ansible
+dnspython
 netaddr
 openssh-wrapper
 proxmoxer==2.0.1
+PyMySQL
 requests

@@ -15,5 +15,5 @@
     - zone_vars/lab.yml
 
   roles:
-    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.ubuntu.cloud_init_reboot
     - role: cloudcodger.dns.bind9_servers

@@ -5,4 +5,4 @@
 
   roles:
     - role: destroyer
-      destroyer_group: rotary_ct
+      destroyer_group: rotary

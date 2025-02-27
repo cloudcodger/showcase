@@ -1,0 +1,14 @@
+---
+ansible_user: ubuntu
+
+alloy_config: "{{ lookup('file', 'grafana/minio.alloy') }}"
+
+# alloy_env_file_vars:
+#   CONFIG_FILE: '"/opt/alloy"'
+#   CUSTOM_ARGS: '"--server.http.listen-addr=0.0.0.0:12345"'
+#   RESTART_ON_UPGRADE: true
+
+minio_browser_redirect_url: http://minio/minio/ui/
+minio_data_drive: /dev/sdb
+minio_root_password: "{{ lookup('file', '~/.secrets/minio/root_password') }}"
+minio_volume_hosts: "minio{1...3}.lab.{{ showcase_base_domain }}"

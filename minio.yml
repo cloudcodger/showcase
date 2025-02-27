@@ -1,0 +1,17 @@
+---
+- name: Install MinIO.
+  become: true
+  hosts: minio
+
+  roles:
+    - role: cloudcodger.ubuntu.cloud_init_reboot
+    - role: cloudcodger.ubuntu.minio
+
+- name: Install MinIO NGINX Load Balancers.
+  become: true
+  hosts: miniolb
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.ubuntu.keepalived
+    - role: cloudcodger.ubuntu.nginx

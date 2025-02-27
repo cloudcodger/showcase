@@ -1,0 +1,28 @@
+---
+- name: Create LXC containers for NGINX as MinIO Load Balancers.
+  gather_facts: false
+  hosts: localhost
+
+  vars:
+    lxc_cores: 1
+    lxc_disk_size: "12"
+    lxc_storage: local-lvm
+    lxc_template: debian-12-standard_12.2-1_amd64.tar.zst
+
+    # The name 'minio' points to '192.168.6.65' which is the VIP
+    # for 'keepalived' running on these two LXC containers.
+    # Make sure this IP address is not used for a VM or LXC.
+    lxc_cts:
+      - name: "miniolb1"
+        ip: "192.168.6.63/24"
+        pm_host: gadget2
+        tags: ["miniolb", "keepalived_primary"]
+        vmid: "6063"
+      - name: "miniolb2"
+        ip: "192.168.6.64/24"
+        pm_host: gadget3
+        tags: ["miniolb", "keepalived_backup"]
+        vmid: "6064"
+
+  roles:
+    - role: cloudcodger.proxmox_client.lxc

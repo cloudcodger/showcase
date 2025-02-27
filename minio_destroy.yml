@@ -1,0 +1,8 @@
+---
+- name: Stop and Remove 'minio' VMs to clean up.
+  gather_facts: false
+  hosts: localhost
+
+  roles:
+    - role: destroyer
+      destroyer_group: minio

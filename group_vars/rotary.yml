@@ -1,8 +1,6 @@
 ---
 ansible_user: root
 
-alloy_config: "{{ lookup('file', 'grafana/rotary.alloy') }}"
-
 alloy_env_file_vars:
   CUSTOM_ARGS: "--server.http.listen-addr=0.0.0.0:12345"
 
@@ -53,34 +51,4 @@ nginx_balancer_sites:
       - X-Forwarded-Proto $scheme
       - X-Real-IP $remote_addr
     listen_port: "9009"
-    server_name: "_"
-  - name: minio
-    backends:
-      - "minio1.lab.{{ showcase_base_domain }}:9000"
-      - "minio2.lab.{{ showcase_base_domain }}:9000"
-      - "minio3.lab.{{ showcase_base_domain }}:9000"
-    disable_chunked_encoding: true
-    headers:
-      - 'Connection ""'
-      - Host $http_host
-      - X-Forwarded-For $proxy_add_x_forwarded_for
-      - X-Forwarded-Proto $scheme
-      - X-Real-IP $remote_addr
-    http_version: "1.1"
-    listen_port: "9000"
-    server_name: "_"
-  - name: minio-ui
-    backends:
-      - "minio1.lab.{{ showcase_base_domain }}:9001"
-      - "minio2.lab.{{ showcase_base_domain }}:9001"
-      - "minio3.lab.{{ showcase_base_domain }}:9001"
-    disable_chunked_encoding: true
-    headers:
-      - 'Connection ""'
-      - Host $http_host
-      - X-Forwarded-For $proxy_add_x_forwarded_for
-      - X-Forwarded-Proto $scheme
-      - X-Real-IP $remote_addr
-    http_version: "1.1"
-    listen_port: "80"
     server_name: "_"

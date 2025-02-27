@@ -51,7 +51,7 @@ ssh-copy-id -i ~/.ssh/showcase.pub root@gadget3
 The `pve` Ansible playbook requires multiple collections and roles. Install them using the `requirements.yml` file.
 
 ```bash
-ansible-galaxy install -r requirements.yml
+ansible-galaxy collection install -r requirements.yml
 ```
 
 # Configure the Proxmox cluster

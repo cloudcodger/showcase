@@ -9,4 +9,6 @@ collections:
   - name: cloudcodger.proxmox_openssh
     version: "1.2.1"
   - name: cloudcodger.ubuntu
-    version: "1.0.0"
+    version: "1.2.1"
+  - name: grafana.grafana
+    version: "5.7.0"
