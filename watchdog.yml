@@ -1,0 +1,7 @@
+---
+- name: Install and configure Grafana.
+  hosts: watchdog
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: grafana.grafana.grafana

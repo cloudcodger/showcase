@@ -1,0 +1,8 @@
+---
+- name: Stop and Remove 'watchdog' Container to clean up after testing.
+  gather_facts: false
+  hosts: localhost
+
+  roles:
+    - role: destroyer
+      destroyer_group: watchdog_ct

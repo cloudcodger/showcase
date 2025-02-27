@@ -1,0 +1,25 @@
+---
+ansible_user: ubuntu
+
+loki_schema_config:
+  configs:
+    - from: 2024-07-01
+      store: tsdb
+      object_store: aws
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+loki_storage_config:
+  tsdb_shipper:
+    active_index_directory: "{{ loki_working_path }}/index"
+    cache_location: "{{ loki_working_path }}/index_cache"
+    cache_ttl: 24h         # Can be increased for faster performance over longer query periods, uses more disk space
+  aws:
+    endpoint: rotary:9000
+    s3forcepathstyle: true
+    insecure: true
+    bucketnames: loki
+    access_key_id: "{{ lookup('file', '~/.secrets/minio/AWS_ACCESS_KEY_ID') }}"
+    secret_access_key: "{{ lookup('file', '~/.secrets/minio/AWS_SECRET_ACCESS_KEY') }}"

@@ -1,0 +1,10 @@
+---
+- name: Install Grafana Mimir and Grafana Loki.
+  become: true
+  hosts: mimir loki
+
+  roles:
+    - role: cloudcodger.ubuntu.cloud_init_reboot
+    - role: grafana.grafana.mimir
+    - role: grafana.grafana.loki
+    # - role: grafana.grafana.alloy

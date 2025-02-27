@@ -1,0 +1,30 @@
+---
+- name: Create 'dogchow' VMs for Grafan Mimir and Grafana Loki.
+  gather_facts: false
+  hosts: localhost
+
+  vars:
+    cloud_init_work_cores: 2
+    cloud_init_work_memory: '8192'
+    cloud_init_work_tags: [mimir, loki]
+    cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+    cloud_init_startup_pause: 1
+    cloud_init_vms:
+      - name: dogchow1
+        control: false
+        ip: "192.168.6.241/24"
+        pm_host: gadget1
+        vmid: "6241"
+      - name: dogchow2
+        control: false
+        ip: "192.168.6.242/24"
+        pm_host: gadget2
+        vmid: "6242"
+      - name: dogchow3
+        control: false
+        ip: "192.168.6.243/24"
+        pm_host: gadget3
+        vmid: "6243"
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
