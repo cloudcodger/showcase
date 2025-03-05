@@ -1,0 +1,49 @@
+---
+- name: Create the alloy configurations directory.
+  ansible.builtin.file:
+    path: "{{ alloy_configs_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Create 'loki-journal.alloy'.
+  ansible.builtin.template:
+    dest: "{{ alloy_configs_dir }}/loki-journal.alloy"
+    src: loki-journal.alloy.j2
+    mode: "0644"
+  notify: Restart alloy
+  when: alloy_loki_journal_enabled
+
+- name: Create 'loki-var-logs.alloy'.
+  ansible.builtin.template:
+    dest: "{{ alloy_configs_dir }}/loki-var-logs.alloy"
+    src: loki-var-logs.alloy.j2
+    mode: "0644"
+  notify: Restart alloy
+  when: alloy_loki_var_logs_enabled
+
+- name: Create 'prometheus-minio.alloy'.
+  ansible.builtin.template:
+    dest: "{{ alloy_configs_dir }}/prometheus-minio.alloy"
+    src: prometheus-minio.alloy.j2
+    mode: "0644"
+  notify: Restart alloy
+  when: alloy_prometheus_minio_enabled
+
+- name: Create 'prometheus-pve.alloy'.
+  # Configured to work with https://grafana.com/grafana/dashboards/19484-proxmox-general/
+  ansible.builtin.template:
+    dest: "{{ alloy_configs_dir }}/prometheus-pve.alloy"
+    src: prometheus-pve.alloy.j2
+    mode: "0644"
+  notify: Restart alloy
+  when: alloy_prometheus_pve_enabled
+
+- name: Create 'prometheus-unix.alloy'.
+  ansible.builtin.template:
+    dest: "{{ alloy_configs_dir }}/prometheus-unix.alloy"
+    src: prometheus-unix.alloy.j2
+    mode: "0644"
+  notify: Restart alloy
+  when: alloy_prometheus_unix_enabled

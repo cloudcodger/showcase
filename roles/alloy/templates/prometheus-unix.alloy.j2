@@ -1,0 +1,17 @@
+prometheus.exporter.unix "generic" { }
+
+// Configure a prometheus.scrape component to collect unix metrics.
+prometheus.scrape "metrics_unix" {
+    targets    = prometheus.exporter.unix.generic.targets
+    forward_to = [prometheus.remote_write.unix_metrics_service.receiver]
+}
+
+prometheus.remote_write "unix_metrics_service" {
+    endpoint {
+        url = "{{ alloy_mimir_uri }}"
+    }
+    external_labels = {
+        environment = "lab",
+        instance = constants.hostname,
+    }
+}

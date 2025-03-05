@@ -1,0 +1,8 @@
+---
+- name: Configure Alloy on the 'build' host in the Lab network.
+  become: true
+  hosts: build_ct
+
+  roles:
+    - role: alloy # local to this repository
+    - role: grafana.grafana.alloy

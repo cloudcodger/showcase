@@ -1,0 +1,8 @@
+---
+- name: Configure Alloy on the Loki and Mimir hosts in the Lab network.
+  become: true
+  hosts: mimir loki
+
+  roles:
+    - role: alloy # local to this repository
+    - role: grafana.grafana.alloy

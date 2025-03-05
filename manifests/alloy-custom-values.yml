@@ -1,0 +1,45 @@
+---
+alloy:
+  clustering:
+    enabled: true
+  configMap:
+    content: |-
+      logging {
+        level  = "info"
+        format = "logfmt"
+      }
+
+      discovery.kubernetes "pods" {
+        role = "pod"
+      }
+
+      discovery.kubernetes "nodes" {
+        role = "node"
+      }
+
+      discovery.kubernetes "services" {
+        role = "services"
+      }
+
+      discovery.kubernetes "endpoints" {
+        role = "endpoints"
+      }
+
+      discovery.kubernetes "ingresses" {
+        role = "ingresses"
+      }
+
+      // Configure a prometheus.scrape components to collect kubernetes metrics.
+      prometheus.scrape "kubernetes" {
+        targets    = discovery.kubernetes.pods.targets
+        forward_to = [prometheus.remote_write.prom.receiver]
+      }
+
+      prometheus.remote_write "prom" {
+        endpoint {
+            url = "http://mimir-nginx.mimir.svc:80/api/v1/push"
+        }
+      }
+
+  mounts:
+    varlog: true

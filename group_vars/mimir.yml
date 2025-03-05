@@ -1,8 +1,6 @@
 ---
 ansible_user: ubuntu
 
-alloy_config: "{{ lookup('file', 'grafana/mimir.alloy') }}"
-
 # Blocks storage requires a prefix when using a common object storage bucket.
 mimir_blocks_storage:
   storage_prefix: blocks

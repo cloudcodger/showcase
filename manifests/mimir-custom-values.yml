@@ -1,0 +1,80 @@
+---
+global:
+  extraArgs:
+    - -config.expand-env=true
+  extraEnvFrom:
+    - secretRef:
+        name: minio-access-key-secret
+  podAnnotations:
+    bucketSecretVersion: "0"
+
+# This turns off the built-in MinIO support
+minio:
+  enabled: false
+
+nginx:
+  # ingress:
+  #   enabled: true
+  #   ingressClassName: nginx
+  #   hosts:
+  #     - host: mimir.lab.{{ showcase_base_domain }}
+  #       paths:
+  #         - path: /
+  #           pathType: Prefix
+  #   tls:
+  #     # - secretName: mimir-gateway-tls
+  #     #   hosts:
+  #     #     - mimir.lab.{{ showcase_base_domain }}
+  service:
+    # annotations:
+    #   networking.istio.io/exportTo: admin
+    # nameOverride: mimir-nginx
+    type: LoadBalancer
+    loadBalancerIP: 192.168.6.175
+
+# metaMonitoring:
+#   serviceMonitor:
+#     # -- If enabled, ServiceMonitor resources for Prometheus Operator are created
+#     enabled: true
+#   prometheusRule:
+#     # -- If enabled, a PrometheusRule resource for Prometheus Operator is created
+#     enabled: true
+
+# ingress:
+#   enabled: true
+#   ingressClassName: nginx
+#   hosts:
+#     - mimir.lab.{{ showcase_base_domain }}
+
+mimir:
+  structuredConfig:
+    # Uncomment when using Grafana Enterprise Metrics
+    # admin_client:
+    #   storage:
+    #     s3:
+    #       bucket_name: my-admin-bucket
+    #       access_key_id: "${AWS_ACCESS_KEY_ID}"
+    #       endpoint: minio
+    #       secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
+    alertmanager_storage:
+      s3:
+        access_key_id: ${AWS_ACCESS_KEY_ID}
+        bucket_name: mimir-alertmgr
+        endpoint: minio
+        insecure: true
+        secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+    blocks_storage:
+      backend: s3
+      s3:
+        access_key_id: ${AWS_ACCESS_KEY_ID}
+        bucket_name: mimir
+        endpoint: minio
+        insecure: true
+        secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+    ruler_storage:
+      s3:
+        access_key_id: ${AWS_ACCESS_KEY_ID}
+        bucket_name: mimir-ruler
+        endpoint: minio
+        insecure: true
+        secret_access_key: ${AWS_SECRET_ACCESS_KEY}

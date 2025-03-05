@@ -1,9 +1,6 @@
 ---
 ansible_user: root
 
-alloy_env_file_vars:
-  CUSTOM_ARGS: "--server.http.listen-addr=0.0.0.0:12345"
-
 keepalived_vip: 192.168.6.60
 
 nginx_cloud_config_sites:

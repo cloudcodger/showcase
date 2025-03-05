@@ -1,0 +1,53 @@
+---
+- name: Create VMs for a Kubernetes cluster using 'k0s' for running Grafana Services.
+  gather_facts: false
+  hosts: localhost
+
+  vars:
+    cloud_init_construct_cidr_start: "192.168.6.21/24"
+    cloud_init_construct_controllers: 3
+    cloud_init_construct_workers: 6
+    cloud_init_construct_vmid_start: 6021
+    cloud_init_ctrl_cores: 2
+    cloud_init_ctrl_disk_size: '32G'
+    cloud_init_ctrl_memory: '4096'
+    cloud_init_disk_storage: local-lvm
+    # If you change the image to Debian, you must also change `ansible_user` in `group_vars/k0s.yml`.
+    # cloud_init_image: debian-12-genericcloud-amd64.qcow2
+    cloud_init_image: ubuntu-24.04-server.qcow2
+    cloud_init_k8s_tag: k0s
+    cloud_init_startup_pause: 1
+    cloud_init_work_cores: 4
+    cloud_init_work_disk_size: '32G'
+    cloud_init_work_memory: '8192'
+    worker_vmids: "{{ range(cloud_init_construct_vmid_start + cloud_init_construct_controllers, cloud_init_construct_vmid_start + cloud_init_construct_controllers + cloud_init_construct_workers) }}"
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
+
+  tasks:
+    - name: Create second disks for the Virtual Machines
+      community.general.proxmox_disk:
+        api_host: "{{ cloud_init_pm_api_host }}"
+        api_user: "{{ cloud_init_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
+
+        disk: "scsi1"
+        size: '50'
+        storage: local-lvm
+        vmid: "{{ item }}"
+      loop: "{{ worker_vmids }}"
+
+    - name: Create third disks for the Virtual Machines
+      community.general.proxmox_disk:
+        api_host: "{{ cloud_init_pm_api_host }}"
+        api_user: "{{ cloud_init_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
+
+        disk: "scsi2"
+        size: '50'
+        storage: local-lvm
+        vmid: "{{ item }}"
+      loop: "{{ worker_vmids }}"

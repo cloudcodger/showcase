@@ -1,0 +1,27 @@
+discovery.relabel "metrics_minio_integrations" {
+	targets = [{
+		__address__ = "localhost:9000",
+	}]
+
+	rule {
+		target_label = "instance"
+		replacement  = constants.hostname
+	}
+}
+
+prometheus.scrape "metrics_minio_integrations" {
+	targets      = discovery.relabel.metrics_minio_integrations.output
+	forward_to   = [prometheus.remote_write.minio_metrics_service.receiver]
+	job_name     = "integrations/minio"
+	metrics_path = "/minio/prometheus/metrics"
+}
+
+prometheus.remote_write "minio_metrics_service" {
+    endpoint {
+        url = "{{ alloy_mimir_uri }}"
+    }
+    external_labels = {
+        environment = "lab",
+        instance = constants.hostname,
+    }
+}

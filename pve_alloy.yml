@@ -1,0 +1,8 @@
+---
+- name: Configure Alloy on the Proxmox PVE hosts in the Lab network.
+  hosts: proxmox_hosts
+
+  roles:
+    - role: cloudcodger.proxmox_openssh.pve_exporter
+    - role: alloy # local to this repository
+    - role: grafana.grafana.alloy

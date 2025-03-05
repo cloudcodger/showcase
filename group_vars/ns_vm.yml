@@ -1,5 +1,6 @@
 ---
 ansible_user: ubuntu
+bind9_servers_zone_default_ttl: 90
 
 bind9_servers_zones:
   - name: "lab.{{ showcase_base_domain }}"

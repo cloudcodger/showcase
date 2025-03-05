@@ -1,0 +1,13 @@
+---
+alloy_configs_dir: /opt/alloy
+
+# Loki Configs
+alloy_loki_journal_enabled: true
+alloy_loki_var_logs_enabled: true
+alloy_loki_uri: http://loki/loki/api/v1/push
+
+# Prometheus Configs
+alloy_mimir_uri: http://mimir/api/v1/push
+alloy_prometheus_minio_enabled: false
+alloy_prometheus_pve_enabled: false
+alloy_prometheus_unix_enabled: true

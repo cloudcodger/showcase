@@ -1,4 +1,16 @@
 ---
+alloy_env_file_vars:
+  CONFIG_FILE: '"/opt/alloy"'
+  CUSTOM_ARGS: '"--server.http.listen-addr=0.0.0.0:12345"'
+  RESTART_ON_UPGRADE: true
+
+# Defaulting to the Microservices endpoints
+alloy_loki_uri: http://loki/loki/api/v1/push
+alloy_mimir_uri: http://mimir/api/v1/push
+# Switch to these for the Monolithic deployment method
+# alloy_loki_uri: http://rotary:3100/loki/api/v1/push
+# alloy_mimir_uri: http://rotary:9009/api/v1/push
+
 k0s_worker_profiles:
   - name: default
     values:

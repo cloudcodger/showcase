@@ -25,7 +25,7 @@
     - "groups[destroyer_group] is defined"
 
 - name: Stop the Container.
-  proxmox:
+  community.general.proxmox:
     api_host: "{{ lxc_pm_api_host }}"
     api_user: "{{ lxc_pm_api_user }}"
     api_token_id: ansible
@@ -40,7 +40,7 @@
     - "hostvars[item]['proxmox_vmtype'] == 'lxc'"
 
 - name: Stop the VM.
-  proxmox_kvm:
+  community.general.proxmox_kvm:
     api_host: "{{ cloud_init_pm_api_host }}"
     api_user: "{{ cloud_init_pm_api_user }}"
     api_token_id: ansible
@@ -59,7 +59,7 @@
     seconds: 5
 
 - name: Remove the Container.
-  proxmox:
+  community.general.proxmox:
     api_host: "{{ lxc_pm_api_host }}"
     api_user: "{{ lxc_pm_api_user }}"
     api_token_id: ansible
@@ -73,7 +73,7 @@
     - "hostvars[item]['proxmox_vmtype'] == 'lxc'"
 
 - name: Remove the VM.
-  proxmox_kvm:
+  community.general.proxmox_kvm:
     api_host: "{{ cloud_init_pm_api_host }}"
     api_user: "{{ cloud_init_pm_api_user }}"
     api_token_id: ansible

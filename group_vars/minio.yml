@@ -1,12 +1,7 @@
 ---
 ansible_user: ubuntu
 
-alloy_config: "{{ lookup('file', 'grafana/minio.alloy') }}"
-
-# alloy_env_file_vars:
-#   CONFIG_FILE: '"/opt/alloy"'
-#   CUSTOM_ARGS: '"--server.http.listen-addr=0.0.0.0:12345"'
-#   RESTART_ON_UPGRADE: true
+alloy_prometheus_minio_enabled: true
 
 minio_browser_redirect_url: http://minio/minio/ui/
 minio_data_drive: /dev/sdb

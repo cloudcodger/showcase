@@ -1,4 +1,6 @@
 ---
+alloy_prometheus_pve_enabled: true
+
 ansible_python_interpreter: /usr/bin/python3
 ansible_user: root
 cluster_name: lab
@@ -16,3 +18,6 @@ proxmox_host_authorized_keys:
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIwXgG2EeG5jv/2HmsxF/AjcG62p65hoIMtBTWP/VRaB Cloud-Codger
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOlL2ijDshLOTzn7wgk0fMLKmWgvVxNTD0OnDae5+Qfe sage@nomad.local
   - "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/showcase.pub') }}"
+
+pve_exporter_api_host: "{{ groups['proxmox_hosts'] | first }}"
+pve_exporter_token_secret_prefix: lab-

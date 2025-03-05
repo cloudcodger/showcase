@@ -1,0 +1,8 @@
+---
+- name: Configure Alloy on the k0s hosts in the Lab network.
+  become: true
+  hosts: k0s
+
+  roles:
+    - role: alloy # local to this repository
+    - role: grafana.grafana.alloy

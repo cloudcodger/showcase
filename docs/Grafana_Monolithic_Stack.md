@@ -1,11 +1,11 @@
 # A Monolithic Grafana Stack
 
-The Grafana setup contains a group of different services that all work together in order to provide a Grafana web site.
-
-This showcase provides two different methods for the deployment of the Grafana Stack.
+The Grafana setup contains a group of different services that all work together in order to provide a Grafana web site. There are two basic methods for the deployment of the Grafana Stack.
 
 1. A Monolithic approach
 2. A Micro-services approach
+
+This showcase covers the Monolithic approach.
 
 # Components
 

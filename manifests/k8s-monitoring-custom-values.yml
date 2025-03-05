@@ -1,0 +1,39 @@
+---
+cluster:
+  name: lab-grafana-stack
+
+destinations:
+  - name: mimir
+    type: prometheus
+    url: http://mimir-nginx.mimir.svc/api/v1/push
+  - name: hostedLogs
+    type: loki
+    url: http://loki-gateway.loki.svc/loki/api/v1/push
+    # auth:
+    #   type: basic
+    #   username: "my-username"
+    #   password: "my-password"
+    #   tenantIdFrom: env("LOKI_TENANT_ID")
+
+# Features to enable, which determines what data to collect
+clusterMetrics:
+  enabled: true
+
+clusterEvents:
+  enabled: true
+
+nodeLogs:
+  enabled: true
+
+podLogs:
+  enabled: true
+
+# Telemetry collector definitions
+alloy-logs:
+  enabled: true
+
+alloy-metrics:
+  enabled: true
+
+alloy-singleton:
+  enabled: true
