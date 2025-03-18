@@ -1,7 +1,7 @@
 ---
 - name: >
     Showcase configuring a single standalone Bind9 Name Server container.
-    Where the name server is configured using 'group_vars/ns_split.yml'.
+    Where the name server is configured using 'group_vars/ns_single.yml'.
   become: true
   hosts: ns_single
 
