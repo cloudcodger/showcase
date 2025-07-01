@@ -8,6 +8,13 @@ The first showcase, [Proxmox VE](docs/PVE.md), will upload image files to each o
 ansible-playbook acquire.yml
 ```
 
+The utility playbook named `known_hosts.yml` can be used to populate or update the `~/.ssh/known_hosts` file with the SSH host keys for the PVE guest systems. You can limit the systems scanned by setting `host_list`.
+
+```bash
+ansible-playbook -i lab.inventory.proxmox.yml known_hosts.yml
+ansible-playbook -i lab.inventory.proxmox.yml known_hosts.yml -e host_list=k0s
+```
+
 ## Showcased Items
 
 - [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.

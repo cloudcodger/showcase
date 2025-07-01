@@ -1,0 +1,21 @@
+---
+- name: Update the local ~/.ssh/known_hosts file with all keys.
+  hosts: localhost
+
+  tasks:
+    - name: Scan for ssh-hostkeys
+      ansible.builtin.command:
+        cmd: "/usr/bin/ssh-keyscan {{ item }} {{ hostvars[item]['ansible_host'] }}"
+      changed_when: false
+      register: keyscan_cmd
+      loop: "{{ query('inventory_hostnames', host_list | default('proxmox_all_running')) }}"
+
+    - name: Add hostkeys to known_hosts
+      ansible.builtin.lineinfile:
+        path: ~/.ssh/known_hosts
+        regexp: "^{{ item.split()[:2] | join(' ') }}"
+        line: "{{ item }}"
+      loop: "{{ keyscan_cmd.results | map(attribute='stdout_lines') | flatten }}"
+      loop_control:
+        label: "{{ item.split()[:2] | join(' ') }}"
+      when: item[:1] != '#'
