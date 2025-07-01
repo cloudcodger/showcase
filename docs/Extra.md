@@ -11,7 +11,7 @@ ansible-playbook -i pve_hosts.ini extra_snippet.yml
 
 ansible-playbook extra_vm.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml extra_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=extra
 ```
 
 # Requirements
@@ -38,12 +38,4 @@ By logging into the Proxmox VE UI before executing the playbook, once the VM is 
 
 ```bash
 ansible-playbook extra_vm.yml
-```
-
-## `extra_destroy.yml`
-
-Destroys the `extra` QEMU VM and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml extra_destroy.yml
 ```

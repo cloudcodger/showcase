@@ -11,7 +11,7 @@ ansible-playbook study_container.yml
 # or
 ansible-playbook study_vm.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml study_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=study
 ```
 
 # Playbooks
@@ -30,12 +30,4 @@ Creates the QEMU VM `study`.
 
 ```bash
 ansible-playbook study_vm.yml
-```
-
-## `study_destroy.yml`
-
-Destroys the `study` LXC container or VM and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml study_destroy.yml
 ```

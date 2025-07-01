@@ -19,7 +19,7 @@ ansible-playbook -i lab.inventory.proxmox.yml name_servers_single.yml
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_split.yml
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_standard.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml name_servers_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=name_server,ns_single,ns_split,ns_vm
 ```
 
 # Name Server Standard Setup
@@ -85,12 +85,4 @@ Configures the QEMU VMs `ns7` thru `ns9` as a single Primary name server using `
 
 ```bash
 ansible-playbook -i lab.inventory.proxmox.yml name_servers_standard.yml
-```
-
-## `name_servers_destroy.yml`
-
-Destroys the name server resources in order to facilitate building them from nothing again. This playbook also removes the systems from the `.ssh/known_hosts` for each hostname and IP address. It can only do this on one system, so if any of the systems where connected to via SSH from somewhere else, a manual removal is required.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml name_servers_destroy.yml
 ```

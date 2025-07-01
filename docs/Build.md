@@ -13,7 +13,7 @@ ansible-playbook build_container.yml
 
 ansible-playbook -i lab.inventory.proxmox.yml build.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml build_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=build
 ```
 
 # Playbooks
@@ -34,12 +34,4 @@ Before running the playbook, update the `images` variable in the `build.yml` pla
 
 ```bash
 ansible-playbook -i lab.inventory.proxmox.yml build.yml
-```
-
-## `build_destroy.yml`
-
-Destroys the `build` container and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml build_destroy.yml
 ```

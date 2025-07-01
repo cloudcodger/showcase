@@ -1,0 +1,77 @@
+---
+- name: Stop and Remove PVE Guest machines from the cluster.
+  gather_facts: false
+  hosts: localhost
+
+  tasks:
+    - name: Set the list of guests fact.
+      ansible.builtin.set_fact:
+        pve_guests: "{{ query('inventory_hostnames', host_list |
+                        default('study,umbrella')) }}"
+        pve_api_token_secret: "{{ lookup('file', '~/.pve_tokens/{{ lxc_pm_api_token_file }}') }}"
+
+    - name: Remove 'inventory_hostname' from known_hosts file.
+      ansible.builtin.known_hosts:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ pve_guests }}"
+      throttle: 1
+
+    - name: Remove 'ansible_host' from known_hosts file.
+      ansible.builtin.known_hosts:
+        name: "{{ hostvars[item]['ansible_host'] }}"
+        state: absent
+      loop: "{{ pve_guests }}"
+      loop_control:
+        label: "{{ hostvars[item]['ansible_host'] }}"
+      throttle: 1
+
+    - name: Unconditionally shut down the LXC containers.
+      community.general.proxmox:
+        api_host: "{{ lxc_pm_api_host }}"
+        api_user: "{{ lxc_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ pve_api_token_secret }}"
+        force: true
+        hostname: "{{ item }}"
+        node: "{{ hostvars[item]['proxmox_node'] }}"
+        state: stopped
+      loop: "{{ pve_guests | intersect(groups['proxmox_all_lxc']) }}"
+
+    - name: Unconditionally shut down the VMs.
+      community.general.proxmox_kvm:
+        api_host: "{{ lxc_pm_api_host }}"
+        api_user: "{{ lxc_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ pve_api_token_secret }}"
+        force: true
+        name: "{{ item }}"
+        node: "{{ hostvars[item]['proxmox_node'] }}"
+        state: stopped
+      loop: "{{ pve_guests | intersect(groups['proxmox_all_qemu']) }}"
+
+    - name: Give the LXCs and VMs time to stop.
+      ansible.builtin.pause:
+        seconds: 5
+
+    - name: Remove the LXC Containers.
+      community.general.proxmox:
+        api_host: "{{ lxc_pm_api_host }}"
+        api_user: "{{ lxc_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ pve_api_token_secret }}"
+        hostname: "{{ item }}"
+        node: "{{ hostvars[item]['proxmox_node'] }}"
+        state: absent
+      loop: "{{ pve_guests | intersect(groups['proxmox_all_lxc']) }}"
+
+    - name: Remove the VMs.
+      community.general.proxmox_kvm:
+        api_host: "{{ cloud_init_pm_api_host }}"
+        api_user: "{{ cloud_init_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ pve_api_token_secret }}"
+        name: "{{ item }}"
+        node: "{{ hostvars[item]['proxmox_node'] }}"
+        state: absent
+      loop: "{{ pve_guests | intersect(groups['proxmox_all_qemu']) }}"

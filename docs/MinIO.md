@@ -23,7 +23,7 @@ echo 'example-passwd4minIO' > ~/.secrets/minio/root_password
 ansible-playbook minio_containers.yml minio_vms.yml
 ansible-playbook -i lab.inventory.proxmox.yml minio.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml minio_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=minio,miniolb
 ```
 
 # Playbooks
@@ -50,12 +50,4 @@ Contains two plays, one that configures `keepalived` and `nginx` on the LXC cont
 
 ```bash
 ansible-playbook -i lab.inventory.proxmox.yml minio.yml
-```
-
-## `minio_destroy.yml`
-
-Destroys the `minio` VMs and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml minio_destroy.yml
 ```

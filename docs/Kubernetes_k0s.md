@@ -15,7 +15,7 @@ ssh ubuntu@ctrl1 'sudo k0s kubeconfig admin' > ~/.kube/config
 # or
 ssh -i ~/.ssh/cloudcodger ubuntu@ctrl1 'sudo k0s kubeconfig admin' > ~/.kube/config
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml k0s_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=k0s
 ```
 
 One of the features of the `cloudcodger.proxmox_client.cloud_init` role is that it was writting with the ability to create multiple VMs to be used for installing Kubernetes. Make sure and read the [README.md](https://github.com/cloudcodger/proxmox_client/blob/main/roles/cloud_init/README.md). This showcase uses the default values in the role for Control nodes (the `ctrl` prefix), the first of which is also tagged as the `genesis` node, and worker nodes (the `work` prefix). When using this role, keep in mind that the IP addresses of the worker nodes follow directly after the IP addresses of the control nodes. This makes it impossible to change the number of control nodes after the original run without messing up your cluster. Select that number carefully so that you will not need to change it later.
@@ -38,12 +38,4 @@ Configures the QEMU VMs as a Kubernetes cluster.
 
 ```bash
 ansible-playbook -i lab.inventory.proxmox.yml k0s.yml
-```
-
-## `k0s_destroy.yml`
-
-Destroys the `k0s` container and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml k0s_destroy.yml
 ```

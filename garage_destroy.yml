@@ -1,8 +1,0 @@
----
-- name: Stop and Remove 'garage' Container to clean up after testing.
-  gather_facts: false
-  hosts: localhost
-
-  roles:
-    - role: destroyer
-      destroyer_group: garage_ct

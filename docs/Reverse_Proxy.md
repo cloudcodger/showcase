@@ -14,7 +14,7 @@ Quick commands:
 ansible-playbook rotary_containers.yml
 ansible-playbook -i lab.inventory.proxmox.yml rotary.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml rotary_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=rotary
 ```
 
 # Playbooks
@@ -33,12 +33,4 @@ Configures the `rotary` LXC containers.
 
 ```bash
 ansible-playbook -i lab.inventory.proxmox.yml rotary.yml
-```
-
-## `rotary_destroy.yml`
-
-Destroys the `rotary` containers and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml rotary_destroy.yml
 ```

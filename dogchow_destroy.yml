@@ -1,8 +1,0 @@
----
-- name: Stop and Remove 'dogchow' VMs to clean up.
-  gather_facts: false
-  hosts: localhost
-
-  roles:
-    - role: destroyer
-      destroyer_group: mimir

@@ -13,7 +13,7 @@ ansible-playbook garage_container.yml
 
 ansible-playbook -i lab.inventory.proxmox.yml garage.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml garage_destroy.yml
+ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=garage
 ```
 
 # Playbooks
@@ -35,12 +35,4 @@ Configures the LXC container `garage` with multiple services.
 
 ```bash
 ansible-playbook -i lab.inventory.proxmox.yml garage.yml
-```
-
-## `garage_destroy.yml`
-
-Destroys the `garage` container and cleans up SSH keys.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml garage_destroy.yml
 ```

@@ -1,8 +1,0 @@
----
-- name: Stop and Remove 'extra' VM to clean up after testing.
-  gather_facts: false
-  hosts: localhost
-
-  roles:
-    - role: destroyer
-      destroyer_group: extra_vm
