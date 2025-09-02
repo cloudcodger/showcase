@@ -1,5 +1,6 @@
 ---
 - name: Update the local ~/.ssh/known_hosts file with all keys.
+  gather_facts: false
   hosts: localhost
 
   tasks:
@@ -7,8 +8,10 @@
       ansible.builtin.command:
         cmd: "/usr/bin/ssh-keyscan {{ item }} {{ hostvars[item]['ansible_host'] }}"
       changed_when: false
+      ignore_errors: true
       register: keyscan_cmd
-      loop: "{{ query('inventory_hostnames', host_list | default('proxmox_all_running')) }}"
+      loop: "{{ query('inventory_hostnames', host_list) if host_list is defined else
+        groups[group_name | default('proxmox_all_running')] }}"
 
     - name: Add hostkeys to known_hosts
       ansible.builtin.lineinfile:

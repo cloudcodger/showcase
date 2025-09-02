@@ -1,4 +1,12 @@
 ---
+- name: Create container for 'watchdog' machine.
+  gather_facts: false
+  hosts: local_watchdog
+
+  roles:
+    - role: proxmox_client_lxc
+    # - role: cloudcodger.proxmox_client.lxc
+
 - name: Install and configure Grafana.
   hosts: watchdog
 

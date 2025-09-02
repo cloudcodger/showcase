@@ -1,0 +1,15 @@
+---
+ansible_python_interpreter: /usr/bin/python3
+ansible_user: root
+
+images:
+  # - src: files/debian-12-genericcloud-amd64.qcow2
+  #   dest: files/debian-12-qemu-guest.qcow2
+  # - src: files/ubuntu-22.04-server.qcow2
+  #   dest: files/ubuntu-22.04-qemu-guest.qcow2
+  # - src: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+  #   dest: files/ubuntu-22.04-qemu-guest.qcow2
+  - src: files/ubuntu-24.04-server.qcow2
+    dest: files/ubuntu-24.04-qemu-guest.qcow2
+  # - src: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+  #   dest: files/ubuntu-24.04-qemu-guest.qcow2

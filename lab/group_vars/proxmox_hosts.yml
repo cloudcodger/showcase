@@ -1,0 +1,23 @@
+---
+alloy_prometheus_pve_enabled: true
+
+ansible_python_interpreter: /usr/bin/python3
+ansible_user: root
+cluster_name: lab
+
+# This line will build the list of image files that exist.
+# The list can alternatively be provided as a static list (like the commented out lines).
+#   Providing a limited list of files will make the playbook complete faster.
+cloud_init_image_files: "{{ lookup('ansible.builtin.fileglob', 'files/*.qcow2', wantlist=True) | map('basename') }}"
+  # - debian-12-genericcloud-amd64.qcow2
+  # - debian-12-qemu-guest.qcow2
+  # - ubuntu-24.04-qemu-guest.qcow2
+  # - ubuntu-24.04-server.qcow2
+
+proxmox_host_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIwXgG2EeG5jv/2HmsxF/AjcG62p65hoIMtBTWP/VRaB Cloud-Codger
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOlL2ijDshLOTzn7wgk0fMLKmWgvVxNTD0OnDae5+Qfe sage@nomad.local
+  - "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/showcase.pub') }}"
+
+pve_exporter_api_host: "{{ groups['proxmox_hosts'] | first }}"
+pve_exporter_token_secret_prefix: lab-

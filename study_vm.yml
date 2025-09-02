@@ -1,20 +1,7 @@
 ---
 - name: Create 'study' VM for generic testing.
   gather_facts: false
-  hosts: localhost
+  hosts: local_study_vm
 
   roles:
     - role: cloudcodger.proxmox_client.cloud_init
-      # cloud_init_disk_storage: local-lvm
-      cloud_init_image: debian-12-genericcloud-amd64.qcow2
-      # cloud_init_image: ubuntu-22.04-qemu-guest.qcow2
-      cloud_init_pm_host: gadget2
-      # cloud_init_storage: ceph
-      cloud_init_work_cores: 2
-      cloud_init_work_tags: [study_vm]
-
-      cloud_init_vms:
-        - name: study
-          control: false
-          ip: "192.168.6.5/24"
-          vmid: "605"

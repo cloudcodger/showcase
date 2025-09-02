@@ -8,21 +8,21 @@ Quick commands:
 
 ```bash
 # Default is to remove the study and umbrella CTs and VMs
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml
+ansible-playbook -i lab pve_remove_guests.yml
 
 # To remove ALL guest machines
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=proxmox_all_lcx,proxmox_all_qemu
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=proxmox_all_lcx,proxmox_all_qemu
 
 # To remove specific guests or groups
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=build
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=extra
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=garage
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=k0s
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=mimir
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=minio,miniolb
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=name_server,ns_single,ns_split,ns_vm
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=rotary
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=study
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=umbrella
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=watchdog
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=builder
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=extra
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=garage
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=k0s
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=mimir
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=minio,miniolb
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=name_server,ns_single,ns_split,ns_vm
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=rotary
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=study
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=umbrella
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=watchdog
 ```

@@ -1,0 +1,26 @@
+---
+cloud_init_agent: true
+cloud_init_ansible_inventory_refresh: true
+cloud_init_work_cores: 2
+cloud_init_work_memory: '4096'
+# If you change the image to Debian, you must also change `ansible_user`.
+cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+cloud_init_network_gw: 192.168.6.1
+cloud_init_tags: [minio]
+
+cloud_init_vms:
+  - name: minio1
+    control: false
+    ip: "192.168.6.246/24"
+    pm_host: gadget1
+    vmid: "6246"
+  - name: minio2
+    control: false
+    ip: "192.168.6.247/24"
+    pm_host: gadget2
+    vmid: "6247"
+  - name: minio3
+    control: false
+    ip: "192.168.6.248/24"
+    pm_host: gadget3
+    vmid: "6248"

@@ -1,7 +1,5 @@
 ---
 zone_lab:
-  - 'build;;A;192.168.6.55'
-  - 'build;;TXT;Cloud-Init cicustom config'
   - 'captain1;;A;192.168.6.41'
   - 'captain1;;TXT;Kubernetes control node'
   - 'captain1;;TXT;Third Kubernetes cluster'

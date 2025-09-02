@@ -1,4 +1,12 @@
 ---
+- name: Create containers for NGINX Load Balancers.
+  gather_facts: false
+  hosts: local_rotary
+
+  roles:
+    - role: proxmox_client_lxc
+    # - role: cloudcodger.proxmox_client.lxc
+
 - name: Install and configure NGINX and keepalived.
   hosts: rotary
 

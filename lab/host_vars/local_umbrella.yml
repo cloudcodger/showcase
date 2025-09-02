@@ -1,0 +1,11 @@
+---
+cloud_init_find_pm_host: true
+cloud_init_image: ubuntu-24.04-server.qcow2
+# cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+cloud_init_network_gw: 192.168.6.1
+# cloud_init_storage: local-zfs
+
+cloud_init_vms:
+  - name: umbrella
+    ip: "192.168.6.6/24"
+    vmid: "606"

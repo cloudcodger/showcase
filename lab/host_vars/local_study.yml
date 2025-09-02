@@ -1,0 +1,11 @@
+---
+lxc_cores: 2
+lxc_disk_size: "20"
+lxc_find_pm_host: true
+lxc_memory: "4096"
+lxc_network_gw: 192.168.6.1
+
+lxc_cts:
+  - name: study
+    ip: "192.168.6.5/24"
+    vmid: "6005"

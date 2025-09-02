@@ -1,0 +1,68 @@
+---
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_host: 127.0.0.1
+    local_pve_remove:
+      ansible_connection: local
+      ansible_host: 127.0.0.1
+
+local_aliases:
+  children:
+    local_lxc:
+    local_qemu:
+
+local_lxc:
+  hosts:
+    local_builder:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_garage:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_miniolb:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_name_server:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_rotary:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_study:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_units:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_watchdog:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+
+local_qemu:
+  hosts:
+    local_dogchow:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_extra:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_k0s:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_k0s_grafana:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_minio:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_name_server:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_study_vm:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_umbrella:
+      ansible_connection: local
+      ansible_host: 127.0.0.2

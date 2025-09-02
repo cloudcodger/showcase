@@ -1,0 +1,12 @@
+---
+cloud_init_find_pm_host: true
+# If you change the image to Debian, you must also change `ansible_user`.
+# cloud_init_image: debian-12-genericcloud-amd64.qcow2
+cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+cloud_init_network_gw: 192.168.6.1
+cloud_init_work_cores: 2
+
+cloud_init_vms:
+  - name: study
+    ip: "192.168.6.5/24"
+    vmid: "605"

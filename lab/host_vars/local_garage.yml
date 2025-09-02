@@ -1,0 +1,15 @@
+---
+lxc_cores: 2
+lxc_disk_size: "20"
+lxc_find_pm_host: true
+lxc_network_gw: 192.168.6.1
+
+# lxc_template: ubuntu-24.04-standard_24.04-2_amd64.tar.zst
+lxc_template: debian-12-standard_12.7-1_amd64.tar.zst
+
+lxc_cts:
+  - name: garage
+    ip: "192.168.6.7/24"
+    mounts:
+      mp0: "local-lvm:100,mp=/apt-cacher/"
+    vmid: "6007"

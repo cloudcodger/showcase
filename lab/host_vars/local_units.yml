@@ -1,0 +1,20 @@
+---
+# lxc_construct_container_prefix: unit
+# lxc_construct_containers: 3
+# lxc_construct_hosts: [ 'gadget1', 'gadget2', 'gadget3' ]
+
+lxc_cts:
+  - name: "unit1"
+    pm_host: gadget1
+    tags: [number1]
+  - name: "unit2"
+    pm_host: gadget2
+    tags: [num2]
+  - name: "unit3"
+    pm_host: gadget3
+
+lxc_cores: 2
+lxc_disk_size: "20"
+lxc_memory: "2048"
+lxc_tags: [unit]
+lxc_template: debian-12-standard_12.7-1_amd64.tar.zst

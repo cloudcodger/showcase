@@ -1,0 +1,63 @@
+---
+- name: Create VMs for a Kubernetes cluster using 'k0s' for running Grafana Services.
+  gather_facts: false
+  hosts: local_k0s_grafana
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
+
+  tasks:
+    - name: Create second disks for the Virtual Machines
+      community.general.proxmox_disk:
+        api_host: "{{ cloud_init_pm_api_host }}"
+        api_user: "{{ cloud_init_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
+
+        disk: "scsi1"
+        size: '50'
+        storage: local-lvm
+        vmid: "{{ item }}"
+      loop: "{{ worker_vmids }}"
+
+    - name: Create third disks for the Virtual Machines
+      community.general.proxmox_disk:
+        api_host: "{{ cloud_init_pm_api_host }}"
+        api_user: "{{ cloud_init_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
+
+        disk: "scsi2"
+        size: '120'
+        storage: local-lvm
+        vmid: "{{ item }}"
+      loop: "{{ worker_vmids }}"
+
+- name: Installing 'k0s' using the Ansible Roles in 'k8s' collection.
+  become: true
+  hosts: k0s
+
+  roles:
+    - role: cloudcodger.k8s.cloud_init_reboot
+    - role: cloudcodger.k8s.k0s
+
+  # The following tasks are optional and only download the kube_config files
+  # to the control node. If that is a VM and not where you want to run your
+  # `kubectl` commands, then just copy the below files to your other system.
+  # tasks:
+  #   - name: Create the '~/.kube' directory.
+  #     ansible.builtin.file:
+  #       path: "{{ lookup('env', 'HOME') }}/.kube"
+  #       group: ubuntu
+  #       mode: "0755"
+  #       owner: ubuntu
+  #       state: directory
+  #     delegate_to: localhost
+  #     run_once: true
+
+  #   - name: Get the 'admin' configuration from the control nodes.
+  #     ansible.builtin.fetch:
+  #       src: /var/lib/k0s/pki/admin.conf
+  #       dest: "{{ lookup('env', 'HOME') }}/.kube/{{ inventory_hostname }}.conf"
+  #       flat: true
+  #     when: "'control' in group_names"

@@ -1,0 +1,7 @@
+---
+- name: Create an Umbrella VM for testing generic Ubuntu services.
+  gather_facts: false
+  hosts: local_umbrella
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init

@@ -1,0 +1,7 @@
+---
+- name: Create LXC container for 'study' machine.
+  gather_facts: false
+  hosts: local_study
+
+  roles:
+    - role: cloudcodger.proxmox_client.lxc

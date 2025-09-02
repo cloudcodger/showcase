@@ -2,7 +2,7 @@
 
 This first showcase will take multiple nodes and:
 
-- Configure all hosts into a cluster named `lab`.
+- Configure all hosts into a PVE cluster named `lab`.
 - Update the APT repositories to the "no-subscription" URLs.
 - Add and Remove SSH authorized keys for the `root` user.
 - Create a `images/00` directory under the `local` storage on each host and upload cloud-init image files there.
@@ -19,13 +19,13 @@ This first showcase will take multiple nodes and:
 ## Steps
 
 1) Manually install [Proxmox Virtual Environment](https://www.proxmox.com/en/proxmox-virtual-environment/overview) onto the three computers.
-2) Make sure the `pve_hosts.ini` file is correct for the names and IP addresses chosen.
-3) Download any image files you want uploaded to each Proxmox VE node and place them in the `files` directory.
+2) Make sure the `lab/proxmox_hosts` file is correct for the names and IP addresses chosen.
+3) Download any image files you want uploaded to each Proxmox VE node and place them in the `files` directory. The [`acquire.yml`](#download-cloud-init-images) playbook can be used for this.
 4) Manually configure `root` access (see below).
 
 # Notices
 
-The `group_vars/proxmox_hosts.yml` sets `ansible_python_interpreter: /usr/bin/python3`, which may need to be changed if the Proxmox hosts have a different python version installed in the future.
+The `lab/group_vars/proxmox_hosts.yml` sets `ansible_python_interpreter: /usr/bin/python3`, which may need to be changed if the Proxmox hosts have a different python version installed in the future.
 
 In order to test different storage types, these must either be created and correctly named during the initial installation, or after the initial setup, as is the case for `Ceph`.
 
@@ -44,6 +44,8 @@ ssh-copy-id -i ~/.ssh/showcase.pub root@192.168.6.253
 ssh-copy-id -i ~/.ssh/showcase.pub root@gadget1
 ssh-copy-id -i ~/.ssh/showcase.pub root@gadget2
 ssh-copy-id -i ~/.ssh/showcase.pub root@gadget3
+# Update the known_hosts file
+ansible-playbook -i lab known_hosts.yml -e host_list=proxmox_hosts
 ```
 
 # Ansible roles
@@ -54,10 +56,22 @@ The `pve` Ansible playbook requires multiple collections and roles. Install them
 ansible-galaxy collection install -r requirements.yml
 ```
 
+# Download cloud-init images
+
+First make sure the `acquire.yml` playbook contains the `loop` entries desired.
+
+Then run the playbook.
+
+```bash
+ansible-playbook acquire.yml
+```
+
 # Configure the Proxmox cluster
 
 You can now execute the playbook to configure the Proxmox VE nodes as described above.
 
 ```bash
-ansible-playbook -i pve_hosts.ini pve.yml
+ansible-playbook -i lab pve.yml
+# or
+ansible-playbook -i lab/proxmox_hosts pve.yml
 ```

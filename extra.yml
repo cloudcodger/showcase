@@ -1,0 +1,7 @@
+---
+- name: Create a VM for cloud-init vendor-data.
+  gather_facts: false
+  hosts: local_extra
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init

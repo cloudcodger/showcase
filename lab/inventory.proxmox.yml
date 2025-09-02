@@ -1,0 +1,27 @@
+---
+# See: https://docs.ansible.com/ansible/latest/collections/community/general/proxmox_inventory.html
+plugin: community.general.proxmox
+user: s1m0ne@pve
+token_id: ansible
+token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
+url: https://gadget1.lab.codger.site:8006/
+validate_certs: false
+
+#### Cache settings
+# cache: true
+# cache_plugin: jsonfile
+# cache_connection: ~/.cache/inventory
+# cache_timeout: 36000
+
+#### Additional facts settings
+want_facts: true
+keyed_groups:
+    # proxmox_tags_parsed is an example of a fact only returned when 'want_facts=true'
+  - key: proxmox_tags_parsed
+    separator: ""
+compose:
+  ansible_host: proxmox_ipconfig0.ip |
+    default((proxmox_lxc_interfaces | selectattr('name', 'equalto', 'eth0') | map(attribute='inet') | first)
+    if proxmox_lxc_interfaces is defined) |
+    default(proxmox_net0.ip)|
+    ansible.utils.ipaddr('address')

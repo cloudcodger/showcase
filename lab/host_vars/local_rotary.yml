@@ -1,0 +1,19 @@
+---
+lxc_cores: 1
+lxc_disk_size: "12"
+lxc_network_gw: 192.168.6.1
+
+# The name 'rotary' points to '192.168.6.60' which is the VIP
+# for 'keepalived' running on these two LXC containers.
+# Make sure this IP address is not used for a VM or LXC.
+lxc_cts:
+  - name: "rotary1"
+    ip: "192.168.6.61/24"
+    pm_host: gadget2
+    tags: ["rotary", "keepalived_primary"]
+    vmid: "6061"
+  - name: "rotary2"
+    ip: "192.168.6.62/24"
+    pm_host: gadget3
+    tags: ["rotary", "keepalived_backup"]
+    vmid: "6062"

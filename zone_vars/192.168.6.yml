@@ -37,7 +37,6 @@ zone_192_168_6:
   - "45;;PTR;crew2.lab.{{ showcase_base_domain }}."
   - "46;;PTR;crew3.lab.{{ showcase_base_domain }}."
   - "51;;PTR;extra.lab.{{ showcase_base_domain }}."
-  - "55;;PTR;build.lab.{{ showcase_base_domain }}."
   - '60;;PTR;rotary.{{ showcase_base_domain }}.'
   - '61;;PTR;rotary1.{{ showcase_base_domain }}.'
   - '62;;PTR;rotary2.{{ showcase_base_domain }}.'
@@ -45,6 +44,7 @@ zone_192_168_6:
   - '64;;PTR;miniolb2.{{ showcase_base_domain }}.'
   - '65;;PTR;minio.{{ showcase_base_domain }}.'
   # Reserve the IP addresses from 175 to 200 for Metallb
+  # Reserve the IP addresses from 201 to 239 for DHCP
   - "240;;PTR;watchdog.lab.{{ showcase_base_domain }}."
   - "241;;PTR;dogchow.lab.{{ showcase_base_domain }}."
   - "242;;PTR;dogchow1.lab.{{ showcase_base_domain }}."

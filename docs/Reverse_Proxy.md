@@ -11,26 +11,17 @@ The showcase also demonstrates how you can use the `nginx` role to create sites 
 Quick commands:
 
 ```bash
-ansible-playbook rotary_containers.yml
-ansible-playbook -i lab.inventory.proxmox.yml rotary.yml
+ansible-playbook -i lab rotary.yml
 # can be destroyed with
-ansible-playbook -i lab.inventory.proxmox.yml pve_remove_guests.yml -e host_list=rotary
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=rotary
 ```
 
 # Playbooks
 
-## `rotary_containers.yml`
-
-Creates the `rotary` LXC containers with the custom variables set directly in the playbook.
-
-```bash
-ansible-playbook rotary_containers.yml
-```
-
 ## `rotary.yml`
 
-Configures the `rotary` LXC containers.
+Creates the `rotary` LXC containers and configures them.
 
 ```bash
-ansible-playbook -i lab.inventory.proxmox.yml rotary.yml
+ansible-playbook -i lab rotary.yml
 ```

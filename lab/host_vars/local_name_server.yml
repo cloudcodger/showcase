@@ -1,0 +1,67 @@
+---
+# This example uses the 'ctrl' and 'work' settings for the cloud_init_vms entries.
+# And demostrates how it can be used to create two sets of VMs with different resource settings.
+# Because neither cloud_init_construct_controllers nor cloud_init_construct_workers
+# is greater than 0, this does not use constructs.
+cloud_init_ctrl_cores: 2
+cloud_init_ctrl_tags: ["ns_vm"]
+cloud_init_image: ubuntu-24.04-qemu-guest.qcow2
+cloud_init_network_gw: 192.168.6.1
+cloud_init_work_cores: 1
+cloud_init_tags: ["ns_vm"]
+
+cloud_init_vms:
+  - name: "ns7"
+    control: true
+    ip: "192.168.6.17/24"
+    pm_host: gadget1
+    vmid: "6017"
+  - name: "ns8"
+    control: false
+    ip: "192.168.6.18/24"
+    pm_host: gadget2
+    vmid: "6018"
+  - name: "ns9"
+    control: false
+    ip: "192.168.6.19/24"
+    pm_host: gadget3
+    vmid: "6019"
+
+lxc_cores: 1
+lxc_disk_size: "12"
+lxc_network_gw: 192.168.6.1
+lxc_template: ubuntu-24.04-standard_24.04-2_amd64.tar.zst
+
+lxc_cts:
+  - name: "ns0"
+    ip: "192.168.6.10/24"
+    tags: ["ns_single"]
+    vmid: "6010"
+  - name: "ns1"
+    ip: "192.168.6.11/24"
+    tags: ["name_server"]
+    vmid: "6011"
+  - name: "ns2"
+    ip: "192.168.6.12/24"
+    pm_host: gadget2
+    tags: ["name_server"]
+    vmid: "6012"
+  - name: "ns3"
+    ip: "192.168.6.13/24"
+    pm_host: gadget3
+    tags: ["name_server"]
+    vmid: "6013"
+  - name: "ns4"
+    ip: "192.168.6.14/24"
+    tags: ["ns_split"]
+    vmid: "6014"
+  - name: "ns5"
+    ip: "192.168.6.15/24"
+    pm_host: gadget2
+    tags: ["ns_split"]
+    vmid: "6015"
+  - name: "ns6"
+    ip: "192.168.6.16/24"
+    pm_host: gadget3
+    tags: ["ns_split"]
+    vmid: "6016"

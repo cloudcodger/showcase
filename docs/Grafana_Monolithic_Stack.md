@@ -7,6 +7,8 @@ The Grafana setup contains a group of different services that all work together 
 
 This showcase covers the Monolithic approach.
 
+As of this update, the [MinIO](#minio) showcase is no longer working. The software has changed owndership and can no longer be installed as described here or in the [MinIO](MinIO.md) showcase. Until another configuration for S3 style backend support is figured out, this showcase only demonstrates the installation of [Mimir and Loki](#grafana-mimir-and-grafana-loki) and [Grafana](#grafana).
+
 # Components
 
 - A set of NGINX reverse proxy load balancers (See [Reverse Proxy](Reverse_Proxy.md))
@@ -23,8 +25,9 @@ See the [Reverse Proxy](Reverse_Proxy.md) showcase. These are the load balancers
 Quick Commands:
 
 ```bash
-ansible-playbook rotary_containers.yml
-ansible-playbook -i lab.inventory.proxmox.yml rotary.yml
+ansible-playbook -i lab rotary.yml
+# can be destroyed with
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=rotary
 ```
 
 ## MinIO
@@ -48,8 +51,7 @@ Quick Commands:
 
 ```bash
 echo 'example-passwd4minIO' > ~/.secrets/minio/root_password
-ansible-playbook minio_vms.yml
-ansible-playbook -i lab.inventory.proxmox.yml minio.yml
+ansible-playbook -i lab minio.yml
 ```
 
 ## Grafana Mimir and Grafana Loki
@@ -61,8 +63,9 @@ If you have the NGINX Reverse Proxy set up, you should now be able to open http:
 Commands:
 
 ```bash
-ansible-playbook dogchow_vms.yml
-ansible-playbook -i lab.inventory.proxmox.yml dogchow.yml
+ansible-playbook -i lab dogchow.yml
+# can be destroyed with
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=mimir
 ```
 
 ## Grafana
@@ -72,6 +75,7 @@ Install Grafana in the `watchdog` LXC container.
 Commands:
 
 ```bash
-ansible-playbook watchdog_container.yml
-ansible-playbook -i lab.inventory.proxmox.yml watchdog.yml
+ansible-playbook -i lab watchdog.yml
+# can be destroyed with
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=watchdog
 ```

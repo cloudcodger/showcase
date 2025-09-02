@@ -1,10 +1,18 @@
 ---
+- name: Create all Bind9 Name Servers.
+  gather_facts: false
+  hosts: local_name_server
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
+    - role: cloudcodger.proxmox_client.lxc
+
 - name: >
-    Showcase configuring standard Bind9 Name Server containers.
-    Considered to be the most beneficial example having all zones use the same host as the primary
+    Showcase for a standard configuration of Bind9 Name Servers in CTs.
+    Considered to be a common example, all zones use the same host as the primary
     name server and the rest of the hosts as secondaries.
-    Where the primary name server is configured using 'host_vars/ns1.yml' and
-    all secondary name servers are configured using 'group_vars/name_server.yml'.
+    The primary name server is configured using 'lab/host_vars/ns1.yml' and
+    all secondary name servers are configured using 'lab/group_vars/name_server.yml'.
   hosts: name_server
 
   # It may be of special interest to note that the variables that get set in these files
@@ -15,4 +23,47 @@
 
   roles:
     - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.dns.bind9_servers
+
+- name: >
+    Showcase configuring a single standalone Bind9 Name Server in a CT.
+    The name server is configured using 'lab/group_vars/ns_single.yml'.
+  hosts: ns_single
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.dns.bind9_servers
+
+- name: >
+    Showcase a split Bind9 Name Server configuration in CTs.
+    Two primary/secondary name server are configured using
+    'lab/host_vars/ns4.yml' and 'lab/host_vars/ns5.yml'.
+    And a secondary name server with a forwarders only zone is
+    configured using 'lsb/host_vars/ns6.yml'.
+  hosts: ns_split
+
+  vars_files:
+    - 'zone_vars/192.168.6.yml'
+    - 'zone_vars/lab.yml'
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.dns.bind9_servers
+
+- name: >
+    Showcase configuring standard Bind9 Name Server in VMs.
+    Similar to but differs from the 'name_servers' hosts,
+    only in that the hosts are VMs and not CTs.
+    Where the primary name server is configured using 'lab/host_vars/ns7.yml' and
+    all secondary name servers are configured using 'lab/group_vars/ns_vm.yml'.
+    Differs from the 'name_servers.yml' playbook, only in that the hosts are VMs and not containers.
+  become: true
+  hosts: ns_vm
+
+  vars_files:
+    - zone_vars/192.168.6.yml
+    - zone_vars/lab.yml
+
+  roles:
+    - role: cloudcodger.ubuntu.cloud_init_reboot
     - role: cloudcodger.dns.bind9_servers

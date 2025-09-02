@@ -8,21 +8,15 @@ The first showcase, [Proxmox VE](docs/PVE.md), will upload image files to each o
 ansible-playbook acquire.yml
 ```
 
-The utility playbook named `known_hosts.yml` can be used to populate or update the `~/.ssh/known_hosts` file with the SSH host keys for the PVE guest systems. You can limit the systems scanned by setting `host_list`.
-
-```bash
-ansible-playbook -i lab.inventory.proxmox.yml known_hosts.yml
-ansible-playbook -i lab.inventory.proxmox.yml known_hosts.yml -e host_list=k0s
-```
-
 ## Showcased Items
 
 - [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.
-- [Build](docs/Build.md), install `qemu-guest-agent` inside cloud init image files.
+- [Build](docs/Build.md), install packages inside cloud init image files.
 - [Extra](docs/Extra.md), using `cicustom` for `vendor_data` (think Cloud Init `user_data`).
 - [Garage](docs/Garage.md), the `apt-cacher` and `netboot_xyz` services.
 - [Grafana Microservices Stack](docs/Grafana_Microservices_Stack.md/), in `k0s`.
 - [Grafana Monolithic Stack](docs/Grafana_Monolithic_Stack.md), Monolithic Stack, in VMs.
+- [Known Hosts](docs/Known_Hosts.md), utility playbook to update `~/.ssh/known_hosts` on the control node.
 - [Kubernetes_k0s](docs/Kubernetes_k0s.md), create a Kubernetes cluster using `k0s`.
 - [MinIO](docs/MinIO.md), create a MinIO cluster for use when testing items that need a local S3 object store.
 - [Name Server](docs/Name_Server.md), multiple playbooks demonstrating different DNS Name Server deployments.

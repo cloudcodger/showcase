@@ -1,0 +1,17 @@
+---
+lxc_ansible_host: true
+
+lxc_cores: 2
+lxc_disk_size: "20"
+lxc_find_pm_host: true
+lxc_memory: "4096"
+# lxc_pm_host: gadget1
+
+# Notice that the tag is different from the container name
+# Ansible will give a warning if you have groups that are the same name as any hosts
+# and you may have unpredictable results when referencing them.
+lxc_tags: []
+lxc_template: debian-12-standard_12.7-1_amd64.tar.zst
+
+lxc_cts:
+  - name: builder

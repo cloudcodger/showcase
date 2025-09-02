@@ -2,10 +2,14 @@
 
 The Grafana setup contains a group of different services that all work together in order to provide a Grafana web site. There are two basic methods for the deployment of the Grafana Stack.
 
+This conflicts with [Kubernetes k0s](Kubernetes_k0s.md) as they both use the same names and IPs for the Kubernetes cluster.
+
 1. A Monolithic approach
 2. A Micro-services approach
 
 This showcase covers the Micro-services approach.
+
+As of this update, the [MinIO](#minio) showcase is no longer working. The software has changed owndership and can no longer be installed as described here or in the [MinIO](MinIO.md) showcase. Until another configuration for S3 style backend support is figured out, this showcase only demonstrates the additional tasks that the [`k0s_grafana_vms.yml`](#install-kubernetes) playbook includes.
 
 ## Prerequisites
 
@@ -47,32 +51,29 @@ Quick Commands:
 
 ```bash
 echo 'example-passwd4minIO' > ~/.secrets/minio/root_password
-ansible-playbook minio_containers.yml
-ansible-playbook minio_vms.yml
-ansible-playbook -i lab.inventory.proxmox.yml minio.yml
+ansible-playbook -i lab minio.yml
+# can be destroyed with
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=minio
 ```
 
 ## Install Kubernetes
 
-Create a Kubernetes cluster using `k0s` that is larger the the small one in the [Kubernetes k0s](Kubernetes_k0s.md) showcase and install `k0s` on them. This is like the [Kubernetes_k0s](docs/Kubernetes_k0s.md) showcase, except that it will add a second Hard Disk (12G in size, as `/dev/sdb` and used for Rook `mon`s) and a third Hard Disk of (120G in size, as `/dev/sdc` and used for Rook `OSD`s) to the worker nodes.
+Create a Kubernetes cluster using `k0s` that is larger then the small one in the [Kubernetes k0s](Kubernetes_k0s.md) showcase and install `k0s` on them. This is like the [Kubernetes_k0s](docs/Kubernetes_k0s.md) showcase, except that it will add a second Hard Disk (for Rook `mon`s of 50G in size, as `/dev/sdb`) and a third Hard Disk (for Rook `OSD`s of 120G in size, as `/dev/sdc`) to the worker nodes.
 
 Grafana Mimir, Grafana Loki and Grafana will all be installed inside this cluster. As well as, MetalLB and Rook.
 
 Commands:
 
 ```bash
-ansible-playbook k0s_grafana_vms.yml
-ansible-playbook -i lab.inventory.proxmox.yml k0s.yml
+ansible-playbook -i lab k0s_grafana.yml
 ssh ubuntu@ctrl1 'sudo k0s kubeconfig admin' > ~/.kube/config
 ssh -i ~/.ssh/cloudcodger ubuntu@ctrl1 'sudo k0s kubeconfig admin' > ~/.kube/config
 or
 mkdir -p ~/.kube
 ssh ubuntu@ctrl1 "sudo k0s kubeconfig create --groups system:masters showcase" > ~/.kube/config
+# can be destroyed with
+ansible-playbook -i lab pve_remove_guests.yml -e host_list=k0s
 ```
-
-## Change worker nodes CPU
-
-For each worker node. Change the CPU type to `host`.
 
 ## Install MetalLB
 

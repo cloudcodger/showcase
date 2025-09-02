@@ -1,0 +1,16 @@
+---
+lxc_cores: 2
+lxc_disk_size: "20"
+lxc_find_pm_host: true
+lxc_memory: "4096"
+lxc_network_gw: 192.168.6.1
+
+# Notice that the tag is different from the container name
+# Ansible will give a warning if you have groups that are the same name as any hosts
+# and you may have unpredictable results when referencing them.
+# lxc_tags: ["watchdog_ct"]
+
+lxc_cts:
+  - name: watchdog
+    ip: "192.168.6.240/24"
+    vmid: "6240"

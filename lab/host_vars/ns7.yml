@@ -1,0 +1,16 @@
+---
+# This showcases how to use the `host_vars` to make this the Primary Name Server.
+# This differs from 'ns1.yml' only in the names, IP addresses and that they are VMs.
+
+bind9_servers_zones:
+  - name: "lab.{{ showcase_base_domain }}"
+    ns:
+      - ns8
+      - ns9
+    records_var: zone_lab # Set in the `zone_vars/lab.yml` file
+
+  - name: '6.168.192.in-addr.arpa'
+    ns:
+      - "ns8.{{ showcase_base_domain }}."
+      - "ns9.{{ showcase_base_domain }}."
+    records_var: zone_192_168_6 # Set in the `zone_vars/192.168.6.yml` file

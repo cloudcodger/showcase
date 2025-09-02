@@ -1,4 +1,12 @@
 ---
+- name: Create VMs for a Kubernetes cluster using 'k0s' and installed via Ansible.
+  gather_facts: false
+  hosts: local_k0s
+
+  roles:
+    - role: proxmox_client_cloud_init
+    # - role: cloudcodger.proxmox_client.cloud_init
+
 - name: Installing 'k0s' using the Ansible Roles in 'k8s' collection.
   become: true
   hosts: k0s

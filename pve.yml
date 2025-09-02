@@ -4,6 +4,13 @@
   roles:
     - role: cloudcodger.proxmox_openssh.proxmox_ve
 
+  tasks:
+    - name: Disable the no enterprise license nag popup message.
+      ansible.builtin.replace:
+        path: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js"
+        regexp: 'res === null.*\|\|'
+        replace: 'false && true &&'
+
 # The following role is now getting an error and does not complete.
 # Something in the setup has changed since this was first written and is no longer working.
 - name: Configure the Proxmox Datacenter.

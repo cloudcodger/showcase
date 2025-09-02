@@ -1,11 +1,55 @@
 ---
-- name: Install MinIO.
-  become: true
-  hosts: minio
+- name: Create LXC containers for NGINX as MinIO Load Balancers.
+  gather_facts: false
+  hosts: local_miniolb
 
   roles:
-    - role: cloudcodger.ubuntu.cloud_init_reboot
-    - role: cloudcodger.ubuntu.minio
+    - role: proxmox_client_lxc
+    # - role: cloudcodger.proxmox_client.lxc
+
+- name: Create VMs for MinIO.
+  gather_facts: false
+  hosts: local_minio
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
+
+  tasks:
+    - name: Create second disks for the Virtual Machines
+      community.general.proxmox_disk:
+        api_host: "{{ cloud_init_pm_api_host }}"
+        api_user: "{{ cloud_init_pm_api_user }}"
+        api_token_id: ansible
+        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
+
+        disk: "scsi1"
+        size: '120'
+        storage: local-lvm
+        vmid: "{{ item }}"
+      loop:
+        - "6246"
+        - "6247"
+        - "6248"
+
+    - name: Scan for ssh-hostkeys
+      ansible.builtin.command:
+        cmd: "/usr/bin/ssh-keyscan {{ hostvars[item]['ansible_host'] }}"
+      changed_when: false
+      register: keyscan_cmd
+      loop:
+        - minio1
+        - minio2
+        - minio3
+        - miniolb1
+        - miniolb2
+
+    - name: Add hostkeys to known_hosts
+      ansible.builtin.lineinfile:
+        path: ~/.ssh/known_hosts
+        regexp: "^{{ item.split()[:2] | join(' ') }}"
+        line: "{{ item }}"
+      loop: "{{ keyscan_cmd.results | map(attribute='stdout_lines') | flatten }}"
+      when: item[:1] != '#'
 
 - name: Install MinIO NGINX Load Balancers.
   become: true
@@ -15,3 +59,12 @@
     - role: cloudcodger.ubuntu.initial_apt_update
     - role: cloudcodger.ubuntu.keepalived
     - role: cloudcodger.ubuntu.nginx
+
+- name: Install MinIO.
+  become: true
+  hosts: minio
+
+  roles:
+    - role: cloudcodger.ubuntu.cloud_init_reboot
+    # Commented out because it no longer works.
+    # - role: cloudcodger.ubuntu.minio

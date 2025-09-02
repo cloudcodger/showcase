@@ -1,10 +1,17 @@
 ---
+- name: Create 'dogchow' VMs for Grafan Mimir and Grafana Loki.
+  gather_facts: false
+  hosts: local_dogchow
+
+  roles:
+    - role: cloudcodger.proxmox_client.cloud_init
+
 - name: Install Grafana Mimir and Grafana Loki.
   become: true
   hosts: mimir loki
 
   roles:
     - role: cloudcodger.ubuntu.cloud_init_reboot
-    - role: grafana.grafana.mimir
-    - role: grafana.grafana.loki
+    # - role: grafana.grafana.mimir
+    # - role: grafana.grafana.loki
     # - role: grafana.grafana.alloy
