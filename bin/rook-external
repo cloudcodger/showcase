@@ -1,0 +1,13 @@
+#!/usr/bin/env -S bash
+
+BIN_DIR=$(dirname $0)
+TMP_DIR="/var/tmp"
+PVE_NODE="gadget1"
+
+scp ${BIN_DIR}/create-external-cluster-resources.py ${PVE_NODE}:
+
+ssh root@${PVE_NODE} python3 create-external-cluster-resources.py --rbd-data-pool-name grafana --cephfs-filesystem-name grafanafs --namespace rook-ceph-external --rgw-endpoint ${PVE_NODE}:7480 --format bash > ${TMP_DIR}/import-env.sh
+
+cat ${TMP_DIR}/import-env.sh
+source ${TMP_DIR}/import-env.sh
+bash ${BIN_DIR}/import-external-cluster.sh

@@ -12,15 +12,15 @@ ansible-playbook acquire.yml
 
 - [Proxmox VE](docs/PVE.md), cluster the Proxmox VE nodes and configure some items.
 - [Build](docs/Build.md), install packages inside cloud init image files.
+- [Ceph Rados Gateway](docs/Ceph-RGW.md), configure Ceph and Ceph RadosGW.
 - [Extra](docs/Extra.md), using `cicustom` for `vendor_data` (think Cloud Init `user_data`).
 - [Garage](docs/Garage.md), the `apt-cacher` and `netboot_xyz` services.
 - [Grafana Microservices Stack](docs/Grafana_Microservices_Stack.md/), in `k0s`.
 - [Grafana Monolithic Stack](docs/Grafana_Monolithic_Stack.md), Monolithic Stack, in VMs.
 - [Known Hosts](docs/Known_Hosts.md), utility playbook to update `~/.ssh/known_hosts` on the control node.
 - [Kubernetes_k0s](docs/Kubernetes_k0s.md), create a Kubernetes cluster using `k0s`.
-- [MinIO](docs/MinIO.md), create a MinIO cluster for use when testing items that need a local S3 object store.
 - [Name Server](docs/Name_Server.md), multiple playbooks demonstrating different DNS Name Server deployments.
-- [Reverse Proxy](Reverse_Proxy.md), create a couple of LXC containers and configure them to be NGINX reverse proxy servers. Or, to set up a server for Ubuntu autoinstall.
+- [Reverse Proxy](docs/Reverse_Proxy.md), create a couple of CTs and configure them to be NGINX reverse proxy servers. Or, to set up a server for Ubuntu autoinstall.
 - [Study](docs/Study.md), VM for study of new concepts and applications.
 - [Umbrella](docs/Umbrella.md), another VM for study of new concepts and applications.
 
@@ -37,7 +37,7 @@ This repository has be written and tested using Multipass on a Mac. Caution, Mac
 
 # Assumptions / Prerequisites
 
-Most Ansible playbooks require one or more of the roles in the collections listed in `requirements.yml` which must be installed.
+Most Ansible playbooks require one or more of the roles in the collections listed in `requirements.yml` which must be installed on the Ansible control host.
 
 ```bash
 ansible-galaxy collection install -r requirements.yml
@@ -45,51 +45,46 @@ ansible-galaxy collection install -r requirements.yml
 
 All showcase items have been designed to work for a test lab located in a dedicated LAN or VLAN with the following attributes.
 
-- Network CIDR block `192.168.6.0/24` (netmask `255.255.255.0`)
-- Default route of `192.168.6.1`
-- DNS configured with various host names that resolve to IP addresses
-    - (See the `zone_vars/lab.yml` and `zone_vars/192.168.6.yml` files).
+- Network CIDR block `192.168.6.0/24` (netmask `255.255.255.0`).
+- Default route of `192.168.6.1`.
+- DNS configured with various host names that resolve to IP addresses (See the `zone_vars/lab.yml` and `zone_vars/192.168.6.yml` files).
 - Three physical systems capable of running the [Proxmox Virtual Environment](https://www.proxmox.com/en/proxmox-virtual-environment/overview).
-- A computer or VM to be the Ansible control host (where you run Ansible).
-- This git repository has been cloned to `~/git-repos/cloudcodger/showcase` (when using Multipass).
-    - when using the multipass
+- A computer or VM to be the [Ansible control host](#ansible-control-host-setup) (where you run Ansible).
+- A clone of [this repository](https://github.com/cloudcodger/showcase.git).
+  - For the [Multipass setup](#multipass-setup), this is cloned to the localsystem and mounted in the VM at `~/showcase`.
 
 ## VMID Numbering Convention
 
-For each LXC Container or QEMU VM, the convention is to use the IP address as the basis for it. This means that they all start with `6` (the third octet) followed by a three digit number (the forth octet). For example, the IP `192.168.6.8` would be configured to use the VMID of `6008`.
+For each CT or VM, the convention is to use the IP address as the basis for the VMID. This means that they all start with `6` (the third octet) followed by a three digit number (the forth octet). For example, the IP `192.168.6.8` would be configured to use the VMID of `6008`. For guest systems that use DHCP, the VMID is set to the next available number (starting at `100`) that Proxmox VE finds available.
 
 ## Domain name
 
-The domain name for this network is set using the `showcase_base_domain` variable, with a default of `example.com`. This is prepended with `lab` (default `lab.example.com`). In order to use another base domain (maybe one you have registered), set the environment varialbe `SHOWCASE_BASE_DOMAIN` and export it. Putting it in `~/.bashrc` will make sure you don't forget to set it.
+The domain name for this network is set using the `showcase_base_domain` variable, with a default of `example.com`. This is prepended with `lab` (default `lab.example.com`). In order to use a different base domain (maybe one you have registered), set the environment varialbe `SHOWCASE_BASE_DOMAIN` or change the value in [`all.yml`](lab/group_vars/all.yml). Setting `SHOWCASE_BASE_DOMAIN` allows the repository to be used as is and setting and exporting it in `~/.bashrc` will make sure it's set for every shell.
 
-# Ansible control node setup
+# Ansible control host setup
 
-Connect to the computer or VM that will be used as your Ansible control node and clone this repository. The environment variable `REPO_DIR` should be set to where you want the `showcase` repository cloned on the local machine.
-
-```bash
-REPO_DIR="${HOME}/git-repos/cloudcodger/showcase"
-git clone git@github.com:cloudcodger/showcase.git ${REPO_DIR}
-```
+Connect to the computer that will be used as your Ansible control node and clone this repository. See the [Multipass setup](#multipass-setup) option or the [Mac estup](#mac-setup) option.
 
 ## Multipass setup
 
 Commands to create an Ubuntu VM named `showcase` on MacOS and mount the repository inside it.
 
 ```bash
+REPO_DIR="${HOME}/git-repos/cloudcodger/showcase"
+git clone git@github.com:cloudcodger/showcase.git ${REPO_DIR}
 brew install --cask multipass
 multipass launch -c 4 -d 20G -m 4G -n showcase --mount ${REPO_DIR}:/home/ubuntu/showcase
 multipass shell showcase
 ```
 
-The `--mount` allows the use of [VSCodium](https://vscodium.com/) on the Mac for editing, which still running commands inside the virtual machine. If you just want to run commands and are OK using something like `vim` for editing the files, you can always just clone the repository inside the VM.
+The `--mount` allows the use of [VSCodium](https://vscodium.com/) on the Mac for editing, while still running commands inside the virtual machine. If you just want to run commands and are OK using something like `vim` for editing the files, you can always just clone the repository inside the VM.
 
-Clone this git repository to `~/git-repos/cloudcodger/showcase` (done by the `multipass launch` parameter `--mount`).
+For example, clone this git repository to `~/git-repos/cloudcodger/showcase` (done by the `multipass launch` parameter `--mount`).
 
 This repository could be cloned to a different location. In which case, modify the path for the `vminit` shell script and the `cd` command with the correct path.
 
 ```bash
 showcase/bin/vminit
-source ${HOME}/.venv/bin/activate
 cd showcase
 ```
 
@@ -100,6 +95,9 @@ Some issues have come up with the latest Python3 when it comes to `proxmoxer`. F
 Commands to run directly on MacOS.
 
 ```bash
+REPO_DIR="${HOME}/git-repos/cloudcodger/showcase"
+git clone git@github.com:cloudcodger/showcase.git ${REPO_DIR}
+
 brew install pyenv
 brew install pyenv-virtualenv
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
@@ -108,23 +106,29 @@ source ~/.zshrc
 pyenv install 3.12
 pyenv virtualenv 3.12 venv12
 pyenv activate venv12 # This can be put in ~/.zshrc as well, if desired
-# cd to this directory
+
+cd ${REPO_DIR}
 pip3 install -r python-requirements.txt
 ansible-galaxy collection install community.general==9.5.0 # may not need
 ansible-galaxy collection install -r requirements.yml
-ansible-galaxy role install -r requirements.yml
 ```
 
 # Ansible Inventory from Proxmox VE
 
+
+## Inventory Source
+
+The inventory for the showcase has been [organized into a directory](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#organizing-inventory-in-a-directory). This provides the ability to combine dynamic and static inventory sources.
+
+## Dynamic Proxmox Inventory
+
 The playbooks in this repository take advantage of a [Proxmox inventory source](https://docs.ansible.com/ansible/latest/collections/community/general/proxmox_inventory.html) to dynamically build the inventory from the PVE cluster.
 
-## Inventory Source Configuration File
+The `lab/inventory.proxmox.yml` file name ends with `.proxmox.yml` as required in the above link.
 
-The `lab.inventory.proxmox.yml` file is the source configuration file used for this showcase. The file name ends with `.proxmox.yml` as required in the above link.
+When the cluster is first created, the `url: https://192.168.6.251:8006/` will use a self signed certificate and `validate_certs: false` must be set for it to work, unless you first configure SSL certificates with something like [Let's Encrypt](https://pve.proxmox.com/pve-docs/pve-admin-guide.html#sysadmin_certs_get_trusted_acme_cert).
 
-When the cluster is first created, the `url: https://192.168.6.251:8006/` will use a self signed certificate and `validate_certs: false` must be set for it to work.
-
-The settings configured will create an Ansible group for each tag on the LXC containers and VMs. This allows a playbook to create a set of VM with a specific tag that a subsequent playbook can reference in the `hosts:` line, so it will only run on the desired set of hosts and not all the hosts in the PVE cluster.
+The `keyed_groups:` section will create an Ansible group for each tag on the CTs and VMs. This allows a playbook to create a set of VM with a specific tag that a subsequent playbook can reference in the `hosts:` line, so it will only run on the desired set of hosts and not all the hosts in the PVE cluster.
+The `compose:` section will set `ansible_host` to the IP address of the guest machine, but cannot get the IP address of a VM using DHCP. This is where the static inventory files are needed.
 
 Also notice that the `token_secret` is read from the file `~/.pve_tokens/lab-s1m0ne-pve-ansible.token`. The correct token must be located in this file and is created the first time the `pve.yml` playbook is run. When using multiple Ansible control nodes with this repository, keeping a copy of this token updated across all the control nodes is outside the scope of this readme. If you loose the token, it can be recreated by using the PVE UI to delete the API token and running the `pve.yml` playbook again to create a new one.

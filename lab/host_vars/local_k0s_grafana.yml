@@ -1,5 +1,7 @@
 ---
 cloud_init_construct_cidr_start: "192.168.6.21/24"
+cloud_init_construct_cidr1_start: "192.168.16.21/24"
+# cloud_init_construct_cidr2_start: "192.168.26.21/24"
 # cloud_init_construct_cidr6_start: "2607:fa18:d7fe:ff00::15/64"
 cloud_init_construct_controllers: 3
 cloud_init_construct_workers: 6
@@ -13,15 +15,13 @@ cloud_init_ctrl_memory: '4096'
 # It pulls IP addresses from inside k8s.
 cloud_init_agent: false
 cloud_init_cpu: host
-cloud_init_disk_storage: local-lvm
+cloud_init_disk_storage: ceph
 # If you change the image to Debian, you must also change `ansible_user` in `group_vars/k0s.yml`.
 # cloud_init_image: debian-12-genericcloud-amd64.qcow2
 cloud_init_image: ubuntu-24.04-server.qcow2
 cloud_init_k8s_tag: k0s
 cloud_init_network_gw: 192.168.6.1
+cloud_init_storage: ceph
 cloud_init_work_cores: 4
 cloud_init_work_disk_size: '32G'
 cloud_init_work_memory: '8192'
-
-worker_vmids: "{{ range(cloud_init_construct_vmid_start + cloud_init_construct_controllers,
-  cloud_init_construct_vmid_start + cloud_init_construct_controllers + cloud_init_construct_workers) }}"

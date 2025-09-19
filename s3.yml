@@ -1,0 +1,16 @@
+---
+- name: Create CTs for NGINX as RadosGW Load Balancers.
+  gather_facts: false
+  hosts: local_s3
+
+  roles:
+    - role: cloudcodger.proxmox_client.lxc
+
+- name: Install NGINX Load Balancers for RadosGW.
+  become: true
+  hosts: s3lb
+
+  roles:
+    - role: cloudcodger.ubuntu.initial_apt_update
+    - role: cloudcodger.ubuntu.keepalived
+    - role: cloudcodger.ubuntu.nginx

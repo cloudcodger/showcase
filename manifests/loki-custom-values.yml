@@ -7,7 +7,7 @@
 #     - -config.expand-env=true
 #   extraEnvFrom:
 #     - secretRef:
-#         name: minio-access-key-secret
+#         name: rgw-access-key-secret
 
 loki:
   auth_enabled: false
@@ -21,13 +21,13 @@ loki:
     type: s3
     bucketNames:
       chunks: "loki"
-      ruler: "loki-ruler"
       admin: "loki-admin"
+      ruler: "loki-ruler"
     s3:
       accessKeyId: ${AWS_ACCESS_KEY_ID}
-      endpoint: minio
+      endpoint: s3
       insecure: true
-      region: slc2
+      region: cephlab
       secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
       s3ForcePathStyle: true
   schemaConfig:
@@ -72,21 +72,23 @@ backend:
     - -config.expand-env=true
   extraEnvFrom:
     - secretRef:
-        name: minio-access-key-secret
+        name: rgw-access-key-secret
 read:
   replicas: 3
   extraArgs:
     - -config.expand-env=true
   extraEnvFrom:
     - secretRef:
-        name: minio-access-key-secret
+        name: rgw-access-key-secret
 write:
   replicas: 3
   extraArgs:
     - -config.expand-env=true
   extraEnvFrom:
     - secretRef:
-        name: minio-access-key-secret
+        name: rgw-access-key-secret
+  persistence:
+    storageClass: ceph-rbd
 
 # Enable minio for storage
 # minio:

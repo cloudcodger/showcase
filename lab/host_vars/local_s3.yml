@@ -1,0 +1,19 @@
+---
+lxc_cores: 1
+lxc_disk_size: "12"
+lxc_network_gw: 192.168.6.1
+
+# The name 's3' points to '192.168.6.249' which is the VIP
+# for 'keepalived' running on these two LXC containers.
+# Make sure this IP address is not used for a VM or LXC.
+lxc_cts:
+  - name: "s3lb1"
+    ip: "192.168.6.201/24"
+    pm_host: gadget2
+    tags: ["s3lb", "keepalived_primary"]
+    vmid: "6063"
+  - name: "s3lb2"
+    ip: "192.168.6.202/24"
+    pm_host: gadget3
+    tags: ["s3lb", "keepalived_backup"]
+    vmid: "6064"

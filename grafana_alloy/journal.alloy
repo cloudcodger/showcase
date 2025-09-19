@@ -1,0 +1,36 @@
+  declare "journal_monitor" {
+
+      argument "environment" {
+          optional = false
+      }
+
+      loki.relabel "journal" {
+      forward_to = []
+
+      rule {
+              source_labels = ["__journal__systemd_unit"]
+              target_label  = "unit"
+          }
+
+      rule {
+          target_label = "environment"
+          replacement  = argument.environment.value
+      }
+
+      rule {
+          target_label = "instance"
+          replacement  = constants.hostname
+      }
+      }
+
+      loki.source.journal "default"  {
+          forward_to    = [loki.write.logs_service.receiver]
+          relabel_rules = loki.relabel.journal.rules
+      }
+
+      loki.write "logs_service" {
+          endpoint {
+              url = sys.env("LOKI_URL")
+          }
+      }
+  }

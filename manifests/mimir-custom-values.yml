@@ -4,7 +4,7 @@ global:
     - -config.expand-env=true
   extraEnvFrom:
     - secretRef:
-        name: minio-access-key-secret
+        name: rgw-access-key-secret
   podAnnotations:
     bucketSecretVersion: "0"
 
@@ -54,13 +54,13 @@ mimir:
     #     s3:
     #       bucket_name: my-admin-bucket
     #       access_key_id: "${AWS_ACCESS_KEY_ID}"
-    #       endpoint: minio
+    #       endpoint: s3
     #       secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
     alertmanager_storage:
       s3:
         access_key_id: ${AWS_ACCESS_KEY_ID}
-        bucket_name: mimir-alertmgr
-        endpoint: minio
+        bucket_name: mimir-alertmanager
+        endpoint: s3
         insecure: true
         secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     blocks_storage:
@@ -68,13 +68,13 @@ mimir:
       s3:
         access_key_id: ${AWS_ACCESS_KEY_ID}
         bucket_name: mimir
-        endpoint: minio
+        endpoint: s3
         insecure: true
         secret_access_key: ${AWS_SECRET_ACCESS_KEY}
     ruler_storage:
       s3:
         access_key_id: ${AWS_ACCESS_KEY_ID}
         bucket_name: mimir-ruler
-        endpoint: minio
+        endpoint: s3
         insecure: true
         secret_access_key: ${AWS_SECRET_ACCESS_KEY}

@@ -4,5 +4,4 @@
 
   roles:
     - role: cloudcodger.proxmox_openssh.pve_exporter
-    - role: alloy # local to this repository
     - role: grafana.grafana.alloy

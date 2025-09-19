@@ -1,0 +1,75 @@
+  declare "pve_monitor" {
+
+      argument "environment" {
+          optional = false
+      }
+
+      discovery.relabel "integrations_pve" {
+          targets = prometheus.exporter.unix.integrations_pve.targets
+
+          rule {
+              target_label = "environment"
+              replacement  = argument.environment.value
+          }
+
+          rule {
+              target_label = "instance"
+              replacement  = constants.hostname
+          }
+
+          rule {
+              target_label = "job"
+              replacement = "integrations/pve"
+          }
+      }
+
+      prometheus.exporter.unix "integrations_pve" {
+          disable_collectors = ["btrfs", "ipvs", "infiniband", "xfs", "zfs"]
+          enable_collectors = ["systemd"]
+
+          filesystem {
+              fs_types_exclude     = "^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|tmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"
+              mount_points_exclude = "^/(dev|proc|run/credentials/.+|sys|var/lib/docker/.+)($|/)"
+              mount_timeout        = "5s"
+          }
+
+          netclass {
+              ignored_devices = "^(veth.*|cali.*|[a-f0-9]{15})$"
+          }
+
+          netdev {
+              device_exclude = "^(veth.*|cali.*|[a-f0-9]{15})$"
+          }
+      }
+
+      prometheus.scrape "integrations_pve" {
+          targets = [
+              {
+                  __address__ = "127.0.0.1:9221",
+                  instance = constants.hostname,
+              },
+          ]
+          metrics_path = "/pve"
+
+          scrape_interval = "10s"
+          params          = { "module" = ["default"], "cluster" = ["1"], "node" = ["1"] }
+
+              forward_to = [prometheus.relabel.integrations_pve.receiver]
+      }
+
+      prometheus.relabel "integrations_pve" {
+          forward_to = [prometheus.remote_write.metrics_service.receiver]
+
+          rule {
+              source_labels = ["__name__"]
+              regex         = "node_scrape_collector_.+"
+              action        = "drop"
+          }
+      }
+
+      prometheus.remote_write "metrics_service" {
+          endpoint {
+              url = sys.env("MIMIR_URL")
+          }
+      }
+  }

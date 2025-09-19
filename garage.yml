@@ -16,6 +16,7 @@
     - role: cloudcodger.ubuntu.initial_apt_update
     - role: cloudcodger.ubuntu.netboot_xyz
     # - role: cloudcodger.ubuntu.apt_mirror
+    - role: cloudcodger.ubuntu.nginx
 
   handlers:
     - name: Reload apt-cacher
@@ -48,3 +49,9 @@
           group = www-data
           user = www-data
       notify: Reload apt-cacher
+
+    - name: Create an grafana_alloy/ files for NGINX to server.
+      ansible.builtin.copy:
+        src: grafana_alloy/
+        dest: "{{ nginx_base }}/{{ inventory_hostname }}"
+      notify: Reload nginx

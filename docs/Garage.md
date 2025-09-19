@@ -1,8 +1,16 @@
 # Installing and Configuring Garage Services
 
-This showcase demonstrates how to create an LXC container and install `apt-cacher` and `netboot_xyz`. It also makes use of `cloudcodger.ubuntu.initial_apt_update` to perform an `apt update; apt dist-upgrade` the first time the playbook is run since this is frequently the first thing done on a new container.
+This showcase demonstrates:
 
-Features demonstrated in this playbook.
+- How to create an LXC container (via `cloudcodger.proxmox_client` role).
+- Use the `cloudcodger.ubuntu.initial_apt_update` role to perform an `apt update; apt dist-upgrade` the first time the playbook runs.
+    Compare with `cloudcodger.ubuntu.cloud_init_reboot` used in other playbooks.
+- Install `netboot_xyz` (via `cloudcodger.ubuntu.netboot_xyz` role).
+- Install `apt-cacher` (via tasks).
+- Install NGINX (via `cloudcodger.ubuntu.nginx` role).
+- Upload all files in the [`grafana_alloy`](../grafana_alloy) directory for [Grafana Alloy](Grafana_Alloy.md).
+
+Features of `cloudcodger.proxmox_client.lxc` demonstrated in this playbook.
 
 - `lxc_cts.ip` to use a static IP address.
 - `lxc_cts.vmid` to set the VMID.

@@ -6,33 +6,6 @@
   roles:
     - role: cloudcodger.proxmox_client.cloud_init
 
-  tasks:
-    - name: Create second disks for the Virtual Machines
-      community.general.proxmox_disk:
-        api_host: "{{ cloud_init_pm_api_host }}"
-        api_user: "{{ cloud_init_pm_api_user }}"
-        api_token_id: ansible
-        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
-
-        disk: "scsi1"
-        size: '50'
-        storage: local-lvm
-        vmid: "{{ item }}"
-      loop: "{{ worker_vmids }}"
-
-    - name: Create third disks for the Virtual Machines
-      community.general.proxmox_disk:
-        api_host: "{{ cloud_init_pm_api_host }}"
-        api_user: "{{ cloud_init_pm_api_user }}"
-        api_token_id: ansible
-        api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
-
-        disk: "scsi2"
-        size: '120'
-        storage: local-lvm
-        vmid: "{{ item }}"
-      loop: "{{ worker_vmids }}"
-
 - name: Installing 'k0s' using the Ansible Roles in 'k8s' collection.
   become: true
   hosts: k0s

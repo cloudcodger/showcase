@@ -30,6 +30,9 @@ local_lxc:
     local_rotary:
       ansible_connection: local
       ansible_host: 127.0.0.2
+    local_s3:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
     local_study:
       ansible_connection: local
       ansible_host: 127.0.0.2

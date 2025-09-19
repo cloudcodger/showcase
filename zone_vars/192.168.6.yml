@@ -45,6 +45,8 @@ zone_192_168_6:
   - '65;;PTR;minio.{{ showcase_base_domain }}.'
   # Reserve the IP addresses from 175 to 200 for Metallb
   # Reserve the IP addresses from 201 to 239 for DHCP
+  - '201;;PTR;s3lb1.lab.codger.site.'
+  - '202;;PTR;s3lb2.lab.codger.site.'
   - "240;;PTR;watchdog.lab.{{ showcase_base_domain }}."
   - "241;;PTR;dogchow.lab.{{ showcase_base_domain }}."
   - "242;;PTR;dogchow1.lab.{{ showcase_base_domain }}."
@@ -53,6 +55,7 @@ zone_192_168_6:
   - '246;;PTR;minio1.{{ showcase_base_domain }}.'
   - '247;;PTR;minio2.{{ showcase_base_domain }}.'
   - '248;;PTR;minio3.{{ showcase_base_domain }}.'
+  - '249;;PTR;s3.lab.codger.site.'
   - "250;;PTR;pxe.lab.{{ showcase_base_domain }}."
   - "251;;PTR;gadget1.lab.{{ showcase_base_domain }}."
   - "252;;PTR;gadget2.lab.{{ showcase_base_domain }}."
