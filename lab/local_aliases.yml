@@ -4,9 +4,11 @@ all:
     localhost:
       ansible_connection: local
       ansible_host: 127.0.0.1
+      ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV' ) }}/bin/python"
     local_pve_remove:
       ansible_connection: local
       ansible_host: 127.0.0.1
+      ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV' ) }}/bin/python"
 
 local_aliases:
   children:
@@ -61,6 +63,9 @@ local_qemu:
       ansible_connection: local
       ansible_host: 127.0.0.2
     local_name_server:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
+    local_silo:
       ansible_connection: local
       ansible_host: 127.0.0.2
     local_study_vm:

@@ -1,10 +1,10 @@
 ---
-- name: Acquire the Cloud Init images desired.
+- name: Acquire the files from URLs.
   gather_facts: false
   hosts: localhost
 
   tasks:
-    - name: Download cloud-init image file.
+    - name: Download cloud-init image files.
       ansible.builtin.get_url:
         url: "{{ item.src }}"
         dest: "{{ item.dest }}"

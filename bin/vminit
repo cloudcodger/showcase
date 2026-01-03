@@ -30,7 +30,6 @@ if [ ! -d ${HOME}/.venv ] ; then
 fi
 
 [ -d ${HOME}/.pve_tokens ] || mkdir ${HOME}/.pve_tokens
-[ -d ${HOME}/.secrets/minio ] || mkdir -p ${HOME}/.secrets/minio
 chmod 0700 ${HOME}/.pve_tokens ${HOME}/.secrets
 
 [ -f ${HOME}/.ssh/config ] || echo -n "${SSH_CONFIG}" > ${HOME}/.ssh/config

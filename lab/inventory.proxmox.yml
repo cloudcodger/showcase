@@ -14,14 +14,14 @@ validate_certs: false
 # cache_timeout: 36000
 
 #### Additional facts settings
-want_facts: true
-keyed_groups:
-    # proxmox_tags_parsed is an example of a fact only returned when 'want_facts=true'
-  - key: proxmox_tags_parsed
-    separator: ""
-compose:
-  ansible_host: proxmox_ipconfig0.ip |
-    default((proxmox_lxc_interfaces | selectattr('name', 'equalto', 'eth0') | map(attribute='inet') | first)
-    if proxmox_lxc_interfaces is defined) |
-    default(proxmox_net0.ip)|
-    ansible.utils.ipaddr('address')
+# want_facts: true
+# keyed_groups:
+#     # proxmox_tags_parsed is an example of a fact only returned when 'want_facts=true'
+#   - key: proxmox_tags_parsed
+#     separator: ""
+# compose:
+#   ansible_host: proxmox_ipconfig0.ip |
+#     default((proxmox_lxc_interfaces | selectattr('name', 'equalto', 'eth0') | map(attribute='inet') | first)
+#     if proxmox_lxc_interfaces is defined) |
+#     default(proxmox_net0.ip)|
+#     ansible.utils.ipaddr('address')

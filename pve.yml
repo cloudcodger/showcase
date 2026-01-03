@@ -1,24 +1,16 @@
 ---
 - name: Configure Proxmox on the three host systems in the Lab network.
   hosts: proxmox_hosts
+
   roles:
-    - role: cloudcodger.proxmox_openssh.proxmox_ve
+    - name: cloudcodger.proxmox_ve.apt
+    - name: cloudcodger.proxmox_ve.authorized_keys
+    - name: cloudcodger.proxmox_ve.cluster
+    - name: cloudcodger.proxmox_ve.upload
 
-  tasks:
-    - name: Disable the no enterprise license nag popup message.
-      ansible.builtin.replace:
-        path: "/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js"
-        regexp: 'res === null.*\|\|'
-        replace: 'false && true &&'
-
-# The following role is now getting an error and does not complete.
-# Something in the setup has changed since this was first written and is no longer working.
 - name: Configure the Proxmox Datacenter.
   gather_facts: false
-  hosts: localhost
+  hosts: local_pve_datacenter
+
   roles:
-    - role: cloudcodger.proxmox_openssh.proxmox_datacenter
-      datacenter_users: ['s1m0ne@pve']
-      proxmox_api_host: "{{ groups['proxmox_hosts'] | first }}"
-      datacenter_tokens: ['s1m0ne@pve!ansible']
-      local_token_secret_name_prefix: "lab-"
+    - name: cloudcodger.proxmox_openssh.datacenter
