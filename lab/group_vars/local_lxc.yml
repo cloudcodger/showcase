@@ -1,21 +1,9 @@
 ---
-ansible_user: root
-
 # The lxc_* variables are used by the cloudcodger.proxmox_client.lxc role
-lxc_pm_api_host: gadget1
-lxc_pm_api_user: "s1m0ne@pve"
-lxc_pm_api_token_file: lab-s1m0ne-pve-ansible.token
-lxc_pm_host: gadget1
-
-lxc_ansible_inventory_refresh: true
+lxc_ansible_inventory_refresh: false
 lxc_features:
   - nesting=1
-lxc_nameservers: ["172.20.1.209", "172.20.1.210"]
+lxc_nameservers: ["172.20.1.2"]
 lxc_searchdomains: ["lab.{{ showcase_base_domain }}", "{{ showcase_base_domain }}"]
-
-lxc_sshkeys: |
-  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwg1ybdTSPF2xFm+TS3bjelKO7VQgGpbyvr+b9qJBzr cloudcodger@showcase
-  {{ lookup('file', lookup('env', 'HOME') + '/.ssh/showcase.pub') }}
-
-lxc_storage: local-lvm
-lxc_template: debian-12-standard_12.7-1_amd64.tar.zst
+lxc_template: debian-13-standard_13.1-2_amd64.tar.zst
+lxc_update_known_hosts: false

@@ -1,0 +1,14 @@
+---
+ansible_user: root
+ansible_python_interpreter: "{{ansible_playbook_python}}"
+
+# variables for 'cloudcodger.proxmox_client.*' roles
+proxmox_client_api_host: gadget1
+proxmox_client_api_user: 's1m0ne@pve'
+proxmox_client_api_secrets_dir: ~/.pve_tokens
+proxmox_client_api_token_file: lab-s1m0ne-pve-ansible.token
+proxmox_client_api_token_name: ansible
+proxmox_client_sshkeys: |
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwg1ybdTSPF2xFm+TS3bjelKO7VQgGpbyvr+b9qJBzr cloudcodger@showcase
+  {{ lookup('file', lookup('env', 'HOME') + '/.ssh/showcase.pub') }}
+proxmox_client_storage: local-lvm

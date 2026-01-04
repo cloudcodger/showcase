@@ -4,18 +4,38 @@
   hosts: localhost
 
   tasks:
+    - name: Create the files directory.
+      ansible.builtin.file:
+        path: files
+        state: directory
+        mode: "0755"
+
     - name: Download cloud-init image files.
       ansible.builtin.get_url:
-        url: "{{ item.src }}"
-        dest: "{{ item.dest }}"
+        url: "{{ item.url }}"
+        dest: "files/{{ item.dest | default(item.url | basename) }}"
+      loop_control:
+        label: "{{ item.name }}"
       loop:
-        # - src: https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-generic-amd64.qcow2
-        #   dest: files/debian-11-generic-amd64.qcow2
-        - src: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
-          dest: files/debian-12-genericcloud-amd64.qcow2
-        # - src: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+        # Cloud-init Images
+        - name: Debian 11 generic
+          url: https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-generic-amd64.qcow2
+        - name: Debian 12 generic
+          url: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+        - name: Debian 13 generic
+          url: https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
+        # - name: Ubuntu 20.04 (focal)
+        #   url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
         #   dest: files/ubuntu-20.04-server.qcow2
-        # - src: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
-        #   dest: files/ubuntu-22.04-server.qcow2
-        - src: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
-          dest: files/ubuntu-24.04-server.qcow2
+        - name: Ubuntu 22.04 (jammy)
+          url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+          dest: ubuntu-22.04-server.qcow2
+        - name: Ubuntu 24.04 (noble)
+          url: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+          dest: ubuntu-24.04-server.qcow2
+
+        # CT template images
+        - name: Debian 12 standard template
+          url: http://download.proxmox.com/images/system/debian-12-standard_12.12-1_amd64.tar.zst
+        - name: Debian 13 standard template
+          url: http://download.proxmox.com/images/system/debian-13-standard_13.1-2_amd64.tar.zst

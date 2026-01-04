@@ -1,6 +1,6 @@
 ---
 ansible_user: root
 
-pve_api_host: gadget1
-pve_api_token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-ansible.token') }}"
-pve_api_user: "s1m0ne@pve"
+remove_pm_api_host: gadget1
+remove_pm_api_token_file: lab-s1m0ne-pve-ansible.token
+remove_pm_api_user: "s1m0ne@pve"

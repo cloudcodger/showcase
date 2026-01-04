@@ -37,5 +37,6 @@ upload_iso_images:
 
 upload_lxc_templates:
   - debian-12-standard_12.12-1_amd64.tar.zst
+  - debian-13-standard_13.1-2_amd64.tar.zst
 # Alternatively, the commented out line will build the list of image files from the 'files' directory contents.
 # upload_lxc_templates: "{{ lookup('ansible.builtin.fileglob', 'files/*.zst', wantlist=True) | map('basename') }}"

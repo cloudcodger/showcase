@@ -10,11 +10,6 @@ all:
       ansible_host: 127.0.0.1
       ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV' ) }}/bin/python"
 
-local_aliases:
-  children:
-    local_lxc:
-    local_qemu:
-
 local_lxc:
   hosts:
     local_builder:
@@ -74,3 +69,8 @@ local_qemu:
     local_umbrella:
       ansible_connection: local
       ansible_host: 127.0.0.2
+
+proxmox_clients:
+  children:
+    local_lxc:
+    local_qemu:
