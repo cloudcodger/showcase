@@ -4,4 +4,4 @@
   hosts: local_umbrella
 
   roles:
-    - role: cloudcodger.proxmox_client.cloud_init
+    - name: cloudcodger.proxmox_client.cloud_init
