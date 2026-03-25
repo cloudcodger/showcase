@@ -5,11 +5,11 @@ collections:
   - name: cloudcodger.k8s
     version: "3.0.0"
   - name: cloudcodger.proxmox_client
-    version: "2.3.2"
+    version: "3.0.0"
   - name: cloudcodger.proxmox_openssh
-    version: "2.0.0"
+    version: "3.0.0"
   - name: cloudcodger.proxmox_ve
-    version: "1.0.0"
+    version: "1.0.1"
   - name: cloudcodger.ubuntu
     version: "2.0.0"
   - name: grafana.grafana

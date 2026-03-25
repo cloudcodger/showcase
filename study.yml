@@ -4,4 +4,4 @@
   hosts: local_study
 
   roles:
-    - role: cloudcodger.proxmox_client.lxc
+    - name: cloudcodger.proxmox_client.lxc

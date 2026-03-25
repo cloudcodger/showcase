@@ -14,3 +14,9 @@
 
   roles:
     - name: cloudcodger.proxmox_openssh.datacenter
+
+- name: Configure Proxmox PVE Exporter on the three host systems in the Lab network.
+  hosts: proxmox_hosts
+
+  roles:
+    - name: cloudcodger.proxmox_ve.pve_exporter

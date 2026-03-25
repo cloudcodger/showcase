@@ -4,4 +4,4 @@
   hosts: local_study_vm
 
   roles:
-    - role: cloudcodger.proxmox_client.cloud_init
+    - name: cloudcodger.proxmox_client.cloud_init
