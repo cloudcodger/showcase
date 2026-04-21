@@ -4,15 +4,15 @@
   hosts: local_k0s_grafana
 
   roles:
-    - role: cloudcodger.proxmox_client.cloud_init
+    - name: cloudcodger.proxmox_client.cloud_init
 
 - name: Installing 'k0s' using the Ansible Roles in 'k8s' collection.
   become: true
   hosts: k0s
 
   roles:
-    - role: cloudcodger.k8s.cloud_init_reboot
-    - role: cloudcodger.k8s.k0s
+    - name: cloudcodger.k8s.cloud_init_reboot
+    - name: cloudcodger.k8s.k0s
 
   # The following tasks are optional and only download the kube_config files
   # to the control node. If that is a VM and not where you want to run your
