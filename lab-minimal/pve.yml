@@ -9,8 +9,8 @@ all:
 proxmox_hosts:
   hosts:
     gadget1:
-      ansible_host: 192.168.6.251
+      ansible_host: 192.168.6.221
     gadget2:
-      ansible_host: 192.168.6.252
+      ansible_host: 192.168.6.222
     gadget3:
-      ansible_host: 192.168.6.253
+      ansible_host: 192.168.6.223

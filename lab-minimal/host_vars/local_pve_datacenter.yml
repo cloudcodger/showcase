@@ -1,0 +1,8 @@
+---
+ansible_user: root
+
+# Used by cloudcodger.proxmox_openssh.datacenter
+datacenter_pm_api_host: "{{ groups['proxmox_hosts'] | first }}"
+datacenter_token_secret_name_prefix: lab-
+datacenter_administrator_tokens: ['s1m0ne@pve!ansible']
+datacenter_auditor_tokens: ['s1m0ne@pve!inventory', 'exporter@pve!prometheus']
