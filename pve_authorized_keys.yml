@@ -1,0 +1,6 @@
+---
+- name: Add root authorized_keys to the Lab Proxmox hosts.
+  hosts: proxmox_hosts
+
+  roles:
+    - name: cloudcodger.proxmox_ve.authorized_keys

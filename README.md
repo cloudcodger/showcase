@@ -25,15 +25,17 @@ First make sure that you have Python installed and all the required modules. The
 
 # Assumptions / Prerequisites
 
-- A working [Ansible Control Node](https://github.com/cloudcodger/showcase/wiki/Ansible-Control-Node).
-- Required Python modules installed (see `python-requirements.txt`).
-- Required Ansible Collections (see `requirements.yml`).
+- A working [Ansible Control Node](https://github.com/cloudcodger/showcase/wiki/Ansible-Control-Node) with:
+  - Required Python modules installed (see `python-requirements.txt`).
+  - Required Ansible Collections installed (see `requirements.yml`).
 - LAN or VLAN dedicated for showcase use, configured with:
   - Network CIDR block `192.168.6.0/24` (netmask `255.255.255.0`).
   - Default route of `192.168.6.1`.
   - Optional, DNS name resolution.
 - Three (3) systems or VMs capable of running [PVE](https://github.com/cloudcodger/showcase/wiki/PVE).
 - A clone of [this repository](https://github.com/cloudcodger/showcase.git).
+
+A different network CIDR block can be used but will require you to find and change it where set.
 
 # Domain name
 

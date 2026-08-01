@@ -4,7 +4,7 @@ all:
     local_pve_datacenter:
       ansible_connection: local
       ansible_host: 127.0.0.1
-      ansible_python_interpreter: "{{ lookup('env', 'VIRTUAL_ENV' ) }}/bin/python"
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
 
 proxmox_hosts:
   hosts:
