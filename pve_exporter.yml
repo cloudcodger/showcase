@@ -1,0 +1,6 @@
+---
+- name: Configure Proxmox PVE Exporter on the PVE nodes.
+  hosts: proxmox_hosts
+
+  roles:
+    - name: cloudcodger.proxmox_ve.pve_exporter
