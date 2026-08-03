@@ -1,0 +1,6 @@
+---
+ansible_user: root
+
+remove_pm_api_host: "gadget1.lab.{{ showcase_base_domain }}"
+remove_pm_api_token_file: lab-s1m0ne-pve-ansible.token
+remove_pm_api_user: "s1m0ne@pve"

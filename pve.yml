@@ -1,4 +1,6 @@
 ---
+# See the PVE-Launch.md Wiki page.
+
 - name: Configure Proxmox on the three host systems in the Lab network.
   hosts: proxmox_hosts
 

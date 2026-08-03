@@ -1,4 +1,16 @@
 ---
+# See the Build.md Wiki page.
+
+- name: Skip creation of any existing builder CT (bug in community.proxmox.proxmox).
+  gather_facts: false
+  hosts: local_builder
+  strategy: linear
+
+  tasks:
+    - name: Remove existing CTs from 'lxc_cts'.
+      ansible.builtin.set_fact:
+        lxc_cts: "{{ lxc_cts | rejectattr('name', 'in', groups['proxmox_all_lxc']) }}"
+
 - name: Create builder CT.
   gather_facts: false
   hosts: local_builder
@@ -11,7 +23,7 @@
   hosts: builder
 
   roles:
-    - name: cloudcodger.ubuntu.initial_apt_update
+    - name: cloudcodger.assorted_apt.initial_apt_update
 
   tasks:
     - name: Install libguestfs-tools package.

@@ -4,5 +4,5 @@ plugin: community.proxmox.proxmox
 user: s1m0ne@pve
 token_id: inventory
 token_secret: "{{ lookup('file', '~/.pve_tokens/lab-s1m0ne-pve-inventory.token') }}"
-url: https://gadget1.{{ lookup('ansible.builtin.env', 'SHOWCASE_BASE_DOMAIN', default='example.com') }}:8006/
+url: https://gadget1.lab.{{ lookup('ansible.builtin.env', 'SHOWCASE_BASE_DOMAIN', default='example.com') }}:8006/
 validate_certs: false
