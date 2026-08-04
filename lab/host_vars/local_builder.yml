@@ -1,9 +1,0 @@
----
-add_guest_host_list: [builder]
-
-lxc_cores: 4
-lxc_disk_size: "20"
-lxc_find_pm_host: true
-lxc_memory: "4096"
-lxc_cts:
-  - name: builder

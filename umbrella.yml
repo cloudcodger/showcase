@@ -5,3 +5,10 @@
 
   roles:
     - name: cloudcodger.proxmox_client.cloud_init
+
+- name: Install Grafana Mimir and Grafana Loki.
+  become: true
+  hosts: umbrella
+
+  roles:
+    - name: cloudcodger.assorted_apt.cloud_init_reboot
