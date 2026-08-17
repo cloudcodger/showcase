@@ -1,0 +1,20 @@
+---
+add_guest_host_list: [common-ct, common-vm]
+# add_guest_host_to_ssh_known_hosts: false
+
+cloud_init_agent: true
+cloud_init_find_pm_host: true
+cloud_init_image: ubuntu-26.04-qemu-guest.qcow2
+
+cloud_init_vms:
+  - name: common-vm
+    ip: dhcp
+
+lxc_find_pm_host: true
+lxc_template: ubuntu-26.04-standard_26.04-1_amd64.tar.zst
+
+lxc_cts:
+  - name: common-ct
+    ip: dhcp
+
+proxmox_client_update_known_hosts: false

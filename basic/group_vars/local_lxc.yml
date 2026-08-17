@@ -1,0 +1,10 @@
+---
+# The lxc_* variables are used by the cloudcodger.proxmox_client.lxc role
+lxc_ansible_inventory_refresh: false
+lxc_features:
+  - nesting=1
+lxc_nameservers: ["172.20.1.2"]
+lxc_searchdomains: ["lab.{{ showcase_base_domain }}", "{{ showcase_base_domain }}"]
+# lxc_storage: ceph
+lxc_template: debian-13-standard_13.1-2_amd64.tar.zst
+lxc_update_known_hosts: false

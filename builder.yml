@@ -1,5 +1,5 @@
 ---
-# See the Build.md Wiki page.
+# See the Builder-Playbook Wiki page.
 
 - name: Skip creation of any existing builder CT (bug in community.proxmox.proxmox).
   gather_facts: false
@@ -37,6 +37,8 @@
         url: "{{ item.src }}"
         dest: "/root/{{ item.dest | basename }}.uncompressed"
       loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.dest | basename }}"
       when: item.src.startswith('http')
 
     - name: Copy cloud-init image file.
@@ -44,19 +46,39 @@
         src: "{{ item.src }}"
         dest: "/root/{{ item.dest | basename }}.uncompressed"
       loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.src | basename }}"
       when: not item.src.startswith('http')
+
+    - name: Resize the images to be large enough to add packages.
+      ansible.builtin.command: "qemu-img resize /root/{{ item.dest | basename }}.uncompressed +2G"
+      loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.dest | basename }}"
+
+    - name: Expand the images filesystem to be large enough to add packages.
+      ansible.builtin.command: "virt-customize -a /root/{{ item.dest | basename }}.uncompressed --run-command 'growpart /dev/sda 1; resize2fs /dev/sda1'"
+      loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.dest | basename }}"
 
     - name: Add 'acl' and 'qemu-guest-agent' to image file and update it.
       ansible.builtin.command: "virt-customize -a {{ item.dest | basename }}.uncompressed --install acl,qemu-guest-agent --update"
       loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.dest | basename }}"
 
     - name: Sysprep the image file.
       ansible.builtin.command: "virt-sysprep -a {{ item.dest | basename }}.uncompressed --operation defaults,-customize"
       loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.dest | basename }}"
 
     - name: Compress image file.
       ansible.builtin.command: "virt-sparsify --compress {{ item.dest | basename }}.uncompressed {{ item.dest | basename }}"
       loop: "{{ images }}"
+      loop_control:
+        label: "{{ item.dest | basename }}"
 
     - name: Download the new image file.
       ansible.builtin.fetch:

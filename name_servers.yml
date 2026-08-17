@@ -4,8 +4,8 @@
   hosts: local_name_server
 
   roles:
-    - role: cloudcodger.proxmox_client.cloud_init
-    - role: cloudcodger.proxmox_client.lxc
+    - name: cloudcodger.proxmox_client.cloud_init
+    - name: cloudcodger.proxmox_client.lxc
 
 - name: >
     Showcase for a standard configuration of Bind9 Name Servers in CTs.
@@ -22,8 +22,8 @@
     - zone_vars/lab.yml
 
   roles:
-    - role: cloudcodger.ubuntu.initial_apt_update
-    - role: cloudcodger.dns.bind9_servers
+    - name: cloudcodger.ubuntu.initial_apt_update
+    - name: cloudcodger.dns.bind9_servers
 
 - name: >
     Showcase configuring a single standalone Bind9 Name Server in a CT.
@@ -31,8 +31,8 @@
   hosts: ns_single
 
   roles:
-    - role: cloudcodger.ubuntu.initial_apt_update
-    - role: cloudcodger.dns.bind9_servers
+    - name: cloudcodger.ubuntu.initial_apt_update
+    - name: cloudcodger.dns.bind9_servers
 
 - name: >
     Showcase a split Bind9 Name Server configuration in CTs.
@@ -47,8 +47,8 @@
     - 'zone_vars/lab.yml'
 
   roles:
-    - role: cloudcodger.ubuntu.initial_apt_update
-    - role: cloudcodger.dns.bind9_servers
+    - name: cloudcodger.ubuntu.initial_apt_update
+    - name: cloudcodger.dns.bind9_servers
 
 - name: >
     Showcase configuring standard Bind9 Name Server in VMs.
@@ -65,5 +65,5 @@
     - zone_vars/lab.yml
 
   roles:
-    - role: cloudcodger.ubuntu.cloud_init_reboot
-    - role: cloudcodger.dns.bind9_servers
+    - name: cloudcodger.ubuntu.cloud_init_reboot
+    - name: cloudcodger.dns.bind9_servers

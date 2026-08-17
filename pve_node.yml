@@ -1,0 +1,16 @@
+---
+# See the PVE-Launch-Node.md Wiki page.
+
+- name: Configure Proxmox on the three host systems in the Lab network.
+  hosts: proxmox_hosts
+
+  roles:
+    - name: cloudcodger.proxmox_ve.apt
+    - name: cloudcodger.proxmox_ve.upload
+
+- name: Configure the Proxmox Datacenter.
+  gather_facts: false
+  hosts: local_pve_datacenter
+
+  roles:
+    - name: cloudcodger.proxmox_openssh.datacenter

@@ -1,6 +1,6 @@
 # Showcase of various DevOps related tools
 
-This repository is a showcase for sharing different methods of implementing some useful DevOps tools and scripts. Primarily based around the [Proxmox Virtualization Environment(PVE)](https://www.proxmox.com/en/proxmox-virtual-environment) and both managing it and various applications running inside it.
+This repository is a showcase for sharing different methods of implementing some useful DevOps tools and scripts. Primarily based around the [Proxmox Virtualization Environment(PVE)](https://www.proxmox.com/en/proxmox-virtual-environment) and both managing it and various applications running inside it using [Ansible](https://github.com/ansible/ansible).
 
 The [Wiki](https://github.com/cloudcodger/showcase/wiki) pages provide details on how to use this repository.
 
@@ -8,7 +8,9 @@ First make sure that you have Python installed and all the required modules. The
 
 # Showcased Items
 
-- [Proxmox VE (PVE)](https://github.com/cloudcodger/showcase/wiki/PVE).
+- [Launch A PVE Node](https://github.com/cloudcodger/showcase/wiki/PVE-Launch-Node).
+- [Launch A PVE Cluster](https://github.com/cloudcodger/showcase/wiki/PVE-Launch-Cluster).
+
 
 - [Build](docs/Build.md), install packages inside cloud init image files.
 - [Ceph Rados Gateway](docs/Ceph-RGW.md), configure Ceph and Ceph RadosGW.
@@ -25,14 +27,12 @@ First make sure that you have Python installed and all the required modules. The
 
 # Assumptions / Prerequisites
 
-- A working [Ansible Control Node](https://github.com/cloudcodger/showcase/wiki/Ansible-Control-Node) with:
-  - Required Python modules installed (see `python-requirements.txt`).
-  - Required Ansible Collections installed (see `requirements.yml`).
-- LAN or VLAN dedicated for showcase use, configured with:
+- A working [Ansible Control Node](https://github.com/cloudcodger/showcase/wiki/Ansible-Control-Node) with the required Python modules and Ansible collections installed.
+- A LAN or VLAN for showcase use. This repository uses the following values:
   - Network CIDR block `192.168.6.0/24` (netmask `255.255.255.0`).
   - Default route of `192.168.6.1`.
-  - Optional, DNS name resolution.
-- Three (3) systems or VMs capable of running [PVE](https://github.com/cloudcodger/showcase/wiki/PVE).
+  - Has DNS name resolution configured.
+- One (1), three (3) or four (4) system(s) capable of running the [PVE](https://www.proxmox.com/en/proxmox-virtual-environment) software.
 - A clone of [this repository](https://github.com/cloudcodger/showcase.git).
 
 A different network CIDR block can be used but will require you to find and change it where set.

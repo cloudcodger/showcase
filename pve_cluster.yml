@@ -1,13 +1,13 @@
 ---
-# See the PVE-Launch.md Wiki page.
+# See the PVE-Launch-Cluster.md Wiki page.
 
 - name: Configure Proxmox on the three host systems in the Lab network.
   hosts: proxmox_hosts
 
   roles:
     - name: cloudcodger.proxmox_ve.apt
-    - name: cloudcodger.proxmox_ve.authorized_keys
     - name: cloudcodger.proxmox_ve.cluster
+    - name: cloudcodger.proxmox_ve.authorized_keys
     - name: cloudcodger.proxmox_ve.upload
 
 - name: Configure the Proxmox Datacenter.

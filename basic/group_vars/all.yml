@@ -1,0 +1,2 @@
+---
+showcase_base_domain: "{{ lookup('ansible.builtin.env', 'SHOWCASE_BASE_DOMAIN', default='example.com') }}"

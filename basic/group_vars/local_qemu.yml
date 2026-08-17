@@ -1,0 +1,4 @@
+---
+# The cloud_init_* variables are used by the cloudcodger.proxmox_client.cloud_init role
+cloud_init_disk_storage: local-lvm
+cloud_init_image: ubuntu-26.04-server.qcow2

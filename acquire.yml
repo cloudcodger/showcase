@@ -31,6 +31,14 @@
           url: https://cloud-images.ubuntu.com/resolute/current/resolute-server-cloudimg-amd64.img
           dest: ubuntu-26.04-server.qcow2
 
+    - name: Download ISO image files.
+      ansible.builtin.get_url:
+        url: "{{ item.url }}"
+        dest: "files/{{ item.dest | default(item.url | basename) }}"
+      loop_control:
+        label: "{{ item.name }}"
+      loop: []
+
     - name: Download CT templage files.
       ansible.builtin.get_url:
         url: "{{ item.url }}"

@@ -1,0 +1,6 @@
+---
+ansible_user: root
+
+remove_pm_api_host: "gismo.lab.{{ showcase_base_domain }}"
+remove_pm_api_token_file: basic-devops-pve-ansible.token
+remove_pm_api_user: "devops@pve"

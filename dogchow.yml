@@ -4,14 +4,14 @@
   hosts: local_dogchow
 
   roles:
-    - role: cloudcodger.proxmox_client.cloud_init
+    - name: cloudcodger.proxmox_client.cloud_init
 
 - name: Install Grafana Mimir and Grafana Loki.
   become: true
   hosts: mimir loki
 
   roles:
-    - role: cloudcodger.ubuntu.cloud_init_reboot
-    # - role: grafana.grafana.mimir
-    # - role: grafana.grafana.loki
-    # - role: grafana.grafana.alloy
+    - name: cloudcodger.ubuntu.cloud_init_reboot
+    # - name: grafana.grafana.mimir
+    # - name: grafana.grafana.loki
+    # - name: grafana.grafana.alloy

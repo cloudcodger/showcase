@@ -3,15 +3,20 @@
   gather_facts: false
   hosts: localhost
 
+  vars:
+    known_hosts_target_group: "{{ group_name | default('proxmox_all_running') }}"
+    known_hosts_targets: "{{ query('inventory_hostnames', host_list | default(known_hosts_target_group)) }}"
+    known_hosts_target_ansible_hosts: "{{ known_hosts_targets |
+      map('extract', hostvars, 'ansible_host') | select('defined') | list }}"
+
   tasks:
     - name: Scan for ssh-hostkeys
       ansible.builtin.command:
-        cmd: "/usr/bin/ssh-keyscan {{ item }} {{ hostvars[item]['ansible_host'] }}"
+        cmd: "/usr/bin/ssh-keyscan {{ item }}"
       changed_when: false
       ignore_errors: true
       register: keyscan_cmd
-      loop: "{{ query('inventory_hostnames', host_list) if host_list is defined else
-        groups[group_name | default('proxmox_all_running')] }}"
+      loop: "{{ (known_hosts_targets + known_hosts_target_ansible_hosts) | sort | unique }}"
 
     - name: Add hostkeys to known_hosts
       ansible.builtin.lineinfile:
