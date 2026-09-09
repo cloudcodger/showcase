@@ -50,9 +50,6 @@
         <mxCell id="485p3MEJu8SMQb3z1VQ_-13" parent="1" style="image;html=1;image=img/lib/clip_art/networking/Router_Icon_128x128.png;dashed=1;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;spacingTop=20;" value="&lt;div&gt;Lab&amp;nbsp;&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212)); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;WAN&lt;/span&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="80" x="251" y="430" as="geometry" />
         </mxCell>
-        <mxCell id="485p3MEJu8SMQb3z1VQ_-16" parent="1" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.azure.server" value="gismo" vertex="1">
-          <mxGeometry height="15" width="50" x="653.91" y="535" as="geometry" />
-        </mxCell>
         <mxCell id="485p3MEJu8SMQb3z1VQ_-17" parent="1" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.azure.server" value="gadget1" vertex="1">
           <mxGeometry height="15" width="50" x="590" y="670" as="geometry" />
         </mxCell>
@@ -61,9 +58,6 @@
         </mxCell>
         <mxCell id="485p3MEJu8SMQb3z1VQ_-19" parent="1" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.azure.server" value="gadget3" vertex="1">
           <mxGeometry height="15" width="50" x="591.46" y="830" as="geometry" />
-        </mxCell>
-        <mxCell id="485p3MEJu8SMQb3z1VQ_-23" edge="1" parent="1" source="485p3MEJu8SMQb3z1VQ_-10" style="edgeStyle=orthogonalEdgeStyle;shape=wire;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;endArrow=none;endFill=0;" target="485p3MEJu8SMQb3z1VQ_-16">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="485p3MEJu8SMQb3z1VQ_-25" edge="1" parent="1" source="485p3MEJu8SMQb3z1VQ_-10" style="edgeStyle=orthogonalEdgeStyle;shape=wire;rounded=0;libavoidRouting=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=light-dark(#FFFFFF,#B3B3B3);" target="485p3MEJu8SMQb3z1VQ_-17">
           <mxGeometry relative="1" as="geometry">
@@ -199,6 +193,12 @@
             <mxPoint x="130" y="670" as="sourcePoint" />
             <mxPoint x="149" y="747" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="Fivi-F7WnQ4W6Uem9uoK-1" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;right=0;top=0;bottom=0;fillColor=none;routingCenterX=-0.5;" value="192.168.5.0/24" vertex="1">
+          <mxGeometry height="39.84" width="92.27" x="251" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="Fivi-F7WnQ4W6Uem9uoK-2" parent="1" style="shape=partialRectangle;whiteSpace=wrap;html=1;right=0;top=0;bottom=0;fillColor=none;routingCenterX=-0.5;" value="192.168.6.0/24" vertex="1">
+          <mxGeometry height="39.84" width="92.27" x="494" y="400" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
