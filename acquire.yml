@@ -39,7 +39,7 @@
         label: "{{ item.name }}"
       loop: []
 
-    - name: Download CT templage files.
+    - name: Download CT template files.
       ansible.builtin.get_url:
         url: "{{ item.url }}"
         dest: "files/{{ item.dest | default(item.url | basename) }}"
