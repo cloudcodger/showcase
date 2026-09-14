@@ -1,5 +1,7 @@
 ---
 collections:
+  - name: cloudcodger.assorted_apt
+    version: "1.0.1"
   - name: cloudcodger.dns
     version: "2.0.1"
   - name: cloudcodger.k8s
