@@ -6,7 +6,7 @@
   roles:
     - name: cloudcodger.proxmox_client.cloud_init
 
-- name: Install Grafana Mimir and Grafana Loki.
+- name: Perform the initial 'reboot' after creation, if required and never done.
   become: true
   hosts: umbrella
 
