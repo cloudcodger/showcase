@@ -10,5 +10,6 @@ proxmox_client_api_token_file: lab-s1m0ne-pve-ansible.token
 proxmox_client_api_token_name: ansible
 proxmox_client_sshkeys: |
   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwg1ybdTSPF2xFm+TS3bjelKO7VQgGpbyvr+b9qJBzr cloudcodger@showcase
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIo8Ej7sE7W8W9KfQ074rHyrS9QmMicF09xBy9UOK1Fe codger@workbench.local
   {{ lookup('file', lookup('env', 'HOME') + '/.ssh/showcase_ed25519.pub') }}
 proxmox_client_storage: local-lvm

@@ -1,0 +1,18 @@
+---
+add_guest_host_list: [knot, kres]
+
+lxc_cores: 4
+lxc_disk_size: "20"
+lxc_find_pm_host: true
+lxc_memory: "10240"
+lxc_network_gw: 192.168.6.1
+
+lxc_cts:
+  - name: knot
+    description: Knot Authoritative name server.
+    ip: "192.168.6.246/24"
+    vmid: "6246"
+  - name: kres
+    description: Knot Resolver.
+    ip: "192.168.6.245/24"
+    vmid: "6245"

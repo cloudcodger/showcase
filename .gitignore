@@ -1,5 +1,6 @@
 **/.DS_Store
 .ansible
 .stfolder
+collections
 files
 wip

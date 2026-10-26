@@ -21,6 +21,9 @@ local_lxc:
     local_garage:
       ansible_connection: local
       ansible_host: 127.0.0.2
+    local_knot:
+      ansible_connection: local
+      ansible_host: 127.0.0.2
     local_name_server:
       ansible_connection: local
       ansible_host: 127.0.0.2

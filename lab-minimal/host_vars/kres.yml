@@ -1,0 +1,7 @@
+---
+knot_resolver_internal_domains:
+  - "lab.{{ showcase_base_domain }}"
+  - "6.168.192.in-addr.arpa"
+knot_resolver_rpz_auto_update: true
+knot_resolver_stub_servers:
+  - "192.168.6.246"

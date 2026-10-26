@@ -1,0 +1,30 @@
+---
+- name: Skip creation of any existing knot CTs (bug in community.proxmox.proxmox).
+  gather_facts: false
+  hosts: local_knot
+  strategy: linear
+
+  tasks:
+    - name: Remove existing CTs from 'lxc_cts'.
+      ansible.builtin.set_fact:
+        lxc_cts: "{{ lxc_cts | rejectattr('name', 'in', groups['proxmox_all_lxc']) }}"
+
+- name: Create all Knot Name Servers.
+  gather_facts: false
+  hosts: local_knot
+
+  roles:
+    - name: cloudcodger.proxmox_client.lxc
+    - name: cloudcodger.proxmox_client.add_guest_host
+
+- name: Configure the knot authoritative name server.
+  hosts: knot
+
+  roles:
+    - name: cloudcodger.dns.knot_auth
+
+- name: Configure the knot resolver server.
+  hosts: kres
+
+  roles:
+    - name: cloudcodger.dns.knot_resolver

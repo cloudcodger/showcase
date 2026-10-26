@@ -1,0 +1,13 @@
+---
+knot_auth_base_domain: codger.site
+knot_auth_listen:
+  - "0.0.0.0@53"
+  - "::@53"
+knot_auth_zones:
+  - domain: "lab.{{ showcase_base_domain }}"
+    ns:
+      - knot.lab.codger.site.
+  - domain: 6.168.192.in-addr.arpa
+    ns:
+      - knot.lab.codger.site.
+    records_var: knot_auth_zone_192_168_6
